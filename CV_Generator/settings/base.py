@@ -30,6 +30,7 @@ ALLOWED_HOSTS = ["localhost"]
 DJANGO_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
+    "django.contrib.sites",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
@@ -39,10 +40,22 @@ DJANGO_APPS = [
 
 LOCAL_APPS = ["users.apps.UsersConfig", "cvs.apps.CvsConfig"]
 
-THIRD_PARTY_APPS = ["rest_framework"]
+THIRD_PARTY_APPS = [
+    "django_extensions",
+    "rest_framework",
+    # allauth authentication apps
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    # allauth providers
+    "allauth.socialaccount.providers.google",
+]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
+SITE_ID = 1
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = "email"
 AUTH_USER_MODEL = "users.User"
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -70,6 +83,13 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    "django.contrib.auth.backends.ModelBackend",
+    # `allauth` specific authentication methods, such as login by e-mail
+    "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
 WSGI_APPLICATION = "CV_Generator.wsgi.application"

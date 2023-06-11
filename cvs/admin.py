@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import (
     CV,
+    Profile,
     PersonalInfomation,
     Education,
     Experience,
@@ -69,6 +70,14 @@ class AchievementInline(admin.TabularInline):
     can_delete = False
 
 
+class PersonalInfomationInline(admin.TabularInline):
+    model = PersonalInfomation
+    extra = 1  # displays only one extra form
+    fields = ["cv", "first_name", "last_name", "dob", "location", "pob"]
+    verbose_name_plural = "Personal Information"
+    can_delete = False
+
+
 class CVAdmin(admin.ModelAdmin):
     inlines = [
         EducationInline,
@@ -77,12 +86,13 @@ class CVAdmin(admin.ModelAdmin):
         LanguageInline,
         ContactInline,
         AchievementInline,
+        PersonalInfomationInline,
     ]
 
 
 admin.site.register(CV, CVAdmin)
 
 
-@admin.register(PersonalInfomation)
-class PersonalInfomationAdmin(admin.ModelAdmin):
-    list_display = ["first_name", "last_name", "image", "dob", "location", "pob"]
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ["user", "phone", "cv"]

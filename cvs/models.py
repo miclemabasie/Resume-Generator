@@ -16,8 +16,17 @@ class CV(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
 
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
+    image = models.ImageField(upload_to="profile")
+    phone = models.CharField(max_length=20)
+    cv = models.ForeignKey(
+        CV, related_name="prifile", on_delete=models.SET_NULL, null=True, blank=True
+    )
+
+
 class PersonalInfomation(models.Model):
-    cv = models.ForeignKey(CV, related_name="profile", on_delete=models.CASCADE)
+    cv = models.ForeignKey(CV, related_name="personal_info", on_delete=models.CASCADE)
     first_name = models.CharField(verbose_name=_("First Name"), max_length=255)
     last_name = models.CharField(verbose_name=_("Last Name"), max_length=255)
     image = models.ImageField(verbose_name=_("Image"), upload_to="images")
