@@ -28,5 +28,5 @@
 
   * Back-end data processing: In the back-end server, use Django to process the submitted data and store it in a database. This can involve validation, normalization, and any other necessary transformations to ensure data quality.
 
-    * CV export: Finally, once the user's data is stored in the database, use Django to generate and export a PDF or other format of the completed CV
+  * CV export: Finally, once the user's data is stored in the database, use Django to generate and export a PDF or other format of the completed CV
 
