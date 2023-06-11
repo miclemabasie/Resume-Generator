@@ -36,14 +36,14 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 
-AUTH_USER_MODEL = "users.User"
 
-LOCAL_APPS = ["users.apps.UsersConfig"]
+LOCAL_APPS = ["users.apps.UsersConfig", "cvs.apps.CvsConfig"]
 
 THIRD_PARTY_APPS = ["rest_framework"]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
+AUTH_USER_MODEL = "users.User"
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
