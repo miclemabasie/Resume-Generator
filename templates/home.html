@@ -1,1 +1,112 @@
-<h1>This is the home page of the application</h1>
+{% block extra_styles %}
+<style>
+    /* Add any extra CSS styles here */
+    body {
+        padding: 0;
+        margin: 0;
+    }
+
+    .hero {
+        background-color: black;
+        height: 70vh;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+    }
+
+    .hero-content {
+        padding: 20px;
+    }
+
+    .main-text {
+        font-size: 60px;
+    }
+
+    .templates {
+        padding: 50px 0;
+    }
+
+    .call-to-action {
+        padding: 50px 0;
+        background-color: #f8f9fa;
+        /* Light gray */
+    }
+</style>
+{% endblock extra_styles %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <h1 class="main-text">Create a Professional CV Today</h1>
+        <p class="lead">With our CV creation service, you can easily build a standout CV that will help you land your
+            dream job.</p>
+        <a href="#" class="btn btn-lg btn-primary">Get Started</a>
+    </div>
+    <div class="hero-content">
+        Content two
+    </div>
+</section>
+
+<!-- Templates Section -->
+<section class="templates">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <h2>Choose from a Variety of Professional Templates</h2>
+                <p class="lead">We offer a wide range of high-quality CV templates to help you showcase your skills and
+                    experience.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <img src="path/to/template1.jpg" class="card-img-top" alt="Template 1">
+                    <div class="card-body">
+                        <h3 class="card-title">Template 1</h3>
+                        <p class="card-text">This classic template features a clean and modern design with plenty of
+                            room for your work history, skills, and education.</p>
+                        <a href="#" class="btn btn-lg btn-primary">Choose Template</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <img src="path/to/template2.jpg" class="card-img-top" alt="Template 2">
+                    <div class="card-body">
+                        <h3 class="card-title">Template 2</h3>
+                        <p class="card-text">This elegant template features a bold header and timeline-style layout that
+                            highlights your career achievements.</p>
+                        <a href="#" class="btn btn-lg btn-primary">Choose Template</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <img src="path/to/template3.jpg" class="card-img-top" alt="Template 3">
+                    <div class="card-body">
+                        <h3 class="card-title">Template 3</h3>
+                        <<p class="card-text">This creative template features a unique design with eye-catching graphics
+                            and bold typography to help you stand out.</p>
+                            <a href="#" class="btn btn-lg btn-primary">Choose Template</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="call-to-action">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <h2>Ready to Create Your Own Professional CV?</h2>
+                <a href="#" class="btn btn-lg btn-primary">Get Started Now</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

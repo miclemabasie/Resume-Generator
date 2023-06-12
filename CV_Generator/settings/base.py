@@ -41,6 +41,8 @@ DJANGO_APPS = [
 LOCAL_APPS = ["users.apps.UsersConfig", "cvs.apps.CvsConfig"]
 
 THIRD_PARTY_APPS = [
+    "crispy_forms",
+    "crispy_bootstrap5",
     "django_extensions",
     "rest_framework",
     # allauth authentication apps
@@ -51,12 +53,18 @@ THIRD_PARTY_APPS = [
     "allauth.socialaccount.providers.google",
 ]
 
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 SITE_ID = 1
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = "email"
+CCOUNT_LOGOUT_REDIRECT_URL = "/"
 AUTH_USER_MODEL = "users.User"
+ACCOUNT_UNIQUE_EMAIL = True
+TEMPLATE_DIRS = [BASE_DIR / "templates/account"]
+LOGIN_REDIRECT_URL = "/"
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
