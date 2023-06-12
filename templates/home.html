@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% load static %}
 {% block extra_styles %}
 <style>
     /* Add any extra CSS styles here */
@@ -7,21 +9,37 @@
     }
 
     .hero {
-        background-color: black;
+        background-image: url("{% static 'images/background.jpg' %}");
+        background-repeat: no-repeat;
+        background-size: cover;
         height: 70vh;
         color: white;
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
         align-items: center;
 
     }
 
+    .overlay {
+        position: absolute;
+        top: 55px;
+        left: 0;
+        width: 100%;
+        height: 70%;
+        background-color: rgba(0, 0, 0, 0.7);
+        /* Change the opacity (0.5) to your desired value */
+    }
+
     .hero-content {
         padding: 20px;
+        z-index: 100;
+
     }
 
     .main-text {
         font-size: 60px;
+        font-weight: bold;
+        font-family: Helvetica, sans-serif;
     }
 
     .templates {
@@ -30,8 +48,8 @@
 
     .call-to-action {
         padding: 50px 0;
-        background-color: #f8f9fa;
-        /* Light gray */
+        background-color: #d1bcc9;
+        
     }
 </style>
 {% endblock extra_styles %}
@@ -39,11 +57,12 @@
 {% block content %}
 <!-- Hero Section -->
 <section class="hero">
+    <div class="overlay"></div>
     <div class="hero-content">
         <h1 class="main-text">Create a Professional CV Today</h1>
         <p class="lead">With our CV creation service, you can easily build a standout CV that will help you land your
             dream job.</p>
-        <a href="#" class="btn btn-lg btn-primary">Get Started</a>
+        <a href="{% url 'cvs:create-cv' 1 %}" class="btn btn-lg btn-success">Get Started</a>
     </div>
     <div class="hero-content">
         Content two
@@ -63,35 +82,23 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="card mb-4 shadow-sm">
-                    <img src="path/to/template1.jpg" class="card-img-top" alt="Template 1">
-                    <div class="card-body">
-                        <h3 class="card-title">Template 1</h3>
-                        <p class="card-text">This classic template features a clean and modern design with plenty of
-                            room for your work history, skills, and education.</p>
-                        <a href="#" class="btn btn-lg btn-primary">Choose Template</a>
-                    </div>
+                    <a href="{% url 'cvs:create-cv' 1 %}">
+                    <img src="{% static 'images/cv1.png' %}" height=500px class="card-img-top" alt="classic template">
+                    </a>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card mb-4 shadow-sm">
-                    <img src="path/to/template2.jpg" class="card-img-top" alt="Template 2">
-                    <div class="card-body">
-                        <h3 class="card-title">Template 2</h3>
-                        <p class="card-text">This elegant template features a bold header and timeline-style layout that
-                            highlights your career achievements.</p>
-                        <a href="#" class="btn btn-lg btn-primary">Choose Template</a>
-                    </div>
+                    <a href="{% url 'cvs:create-cv' 2 %}">
+                        <img src="{% static 'images/cv2.png' %}" height=500px class="card-img-top" alt="classic template">
+                        </a>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card mb-4 shadow-sm">
-                    <img src="path/to/template3.jpg" class="card-img-top" alt="Template 3">
-                    <div class="card-body">
-                        <h3 class="card-title">Template 3</h3>
-                        <<p class="card-text">This creative template features a unique design with eye-catching graphics
-                            and bold typography to help you stand out.</p>
-                            <a href="#" class="btn btn-lg btn-primary">Choose Template</a>
-                    </div>
+                    <a href="{% url 'cvs:create-cv' 3 %}">
+                        <img src="{% static 'images/cv3.png' %}" height=500px class="card-img-top" alt="classic template">
+                        </a>
                 </div>
             </div>
         </div>
@@ -104,7 +111,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8 text-center">
                 <h2>Ready to Create Your Own Professional CV?</h2>
-                <a href="#" class="btn btn-lg btn-primary">Get Started Now</a>
+                <a href="#" class="btn btn-lg btn-success">Get Started Now</a>
             </div>
         </div>
     </div>

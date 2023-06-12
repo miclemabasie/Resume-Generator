@@ -36,3 +36,14 @@ def profile_view(request):
     template_name = "cvs/profile.html"
 
     return render(request, template_name, context)
+
+
+@login_required
+def create_cv(request, template_id=None):
+    user = request.user
+    profile = Profile.objects.get(user=user)
+    template_name = "cvs/create.html"
+    context = {
+        "template_id": template_id,
+    }
+    return render(request, template_name, context)

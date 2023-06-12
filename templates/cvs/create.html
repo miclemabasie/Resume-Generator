@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1> Create that beautiful profile today using template ID {{template_id}}</h1>
+
+{% if template_id  == 1 %}
+    {% include "cv_templates/template_1.html" %}
+{% elif template_id == 2 %}
+    {% include "cv_templates/template_2.html" %}
+{% elif template_id == 3 %}
+    {% include "cv_templates/template_3.html" %}
+{% endif %}
+
+
+{% endblock content %}
