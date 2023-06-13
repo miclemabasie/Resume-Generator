@@ -1,16 +1,71 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block extra_styles %}
+<link rel="stylesheet" href="{% static 'css/create_cv.css' %}" />
+<link rel="stylesheet" href="{% static 'css/templates/template1.css' %}" />
+{% endblock extra_styles %}
 
 {% block content %}
 
-<h1> Create that beautiful profile today using template ID {{template_id}}</h1>
+<div class="split-container">
+    <div class="split left">
+        <form id="pinfo">
 
-{% if template_id  == 1 %}
-    {% include "cv_templates/template_1.html" %}
-{% elif template_id == 2 %}
-    {% include "cv_templates/template_2.html" %}
-{% elif template_id == 3 %}
-    {% include "cv_templates/template_3.html" %}
-{% endif %}
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="firstName">First Name</label>
+                    <input type="text" class="form-control" id="firstName">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" class="form-control" id="lastName">
+                </div>
+            </div>
 
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="image">Image URL</label>
+                    <input type="text" class="form-control" id="image">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="location">Location</label>
+                    <input type="text" class="form-control" id="location">
+                </div>
+            </div>
 
+            <div class="form-group">
+                <label for="headline">Headline</label>
+                <input type="text" class="form-control" id="headline">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="pob">Place of Birth</label>
+                    <input type="text" class="form-control" id="pob">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" class="form-control" id="dob">
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="split right">
+        {% if template_id == 1 %}
+            {% include "cv_templates/template_1.html" %}
+        {% elif template_id == 2 %}
+            {% include "cv_templates/template_2.html" %}
+        {% elif template_id == 3 %}
+            {% include "cv_templates/template_3.html" %}
+        {% endif %}
+    </div>
+</div>
 {% endblock content %}
+
+<script>
+{% block scripts %}
+    <script src="{% static "javascript/template_create.js" %}"></script>
+{% endblock scripts %}
+</script>

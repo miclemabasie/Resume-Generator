@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.css" %}">
  
-        {% block extra_styles %}{% endblock extra_styles %}
+    {% block extra_styles %}{% endblock extra_styles %}
    
     <title>Document</title>
 </head>
@@ -24,6 +24,7 @@
         {% endblock content %}
 
     <script src="{% static "bootstrap/js/allinonebootstrap.js" %}"></script>
+    {% block scripts %}{% endblock scripts %}
 </body>
 
 </html>
