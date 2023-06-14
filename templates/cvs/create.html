@@ -73,9 +73,12 @@
         {% endif %}
     </div>
 </div>
+
+<p id="url">{% url 'cvs:generate-cv' %}</p>
 {% endblock content %}
 
 <script>
+    const url = 
 {% block scripts %}
     <script src="{% static "javascript/template_create.js" %}"></script>
 {% endblock scripts %}

@@ -33,7 +33,10 @@ class PersonalInfomation(models.Model):
     bio = models.TextField(verbose_name=_("Bio"))
     dob = models.DateTimeField(verbose_name=_("Date Of Birth"))
     location = models.CharField(verbose_name=_("Location"), max_length=100)
+    headline = models.CharField(verbose_name=_("Headline"), max_length=100)
     pob = models.CharField(verbose_name=("Place of Birht"), max_length=200)
+    phone = models.CharField(max_length=20, verbose_name=_("Phone"))
+    email = models.EmailField(verbose_name=_("Email"))
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

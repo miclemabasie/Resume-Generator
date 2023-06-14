@@ -1,6 +1,5 @@
 const CV = {
     PersonalInfo: {
-        name: "",
         firstName: "",
         lastName: "",
         image: "",
@@ -10,7 +9,8 @@ const CV = {
         dob: "",
         phone: "",
         location: "",
-        email: ""
+        email: "",
+        summary: "",
     },
     Skills: {
         technical: [],
@@ -57,6 +57,8 @@ const CV = {
     }
 };
 
+const generateBtn = document.getElementById("generateCV")
+
 // Get the form elements
 const pInfoForm = document.getElementById("pinfo")
 
@@ -98,14 +100,42 @@ pInfoForm.addEventListener("keyup", function (e) {
 })
 
 function updateCVData(data, form, element, value) {
-
     data[form][element] = value
-    // console.log(data)
-
+    console.log(form, element, value)
 }
 
 function updateTemplate(template_id, cv_json, form) {
     const data = cv[form]
 
     element.innerHTML = data;
+}
+
+// Create an event to take handle the cv generation
+generateBtn.addEventListener("click", function () {
+    sendCVData(CV)
+})
+
+
+function sendCVData(object) {
+    // convert the js object into JSON
+    const json = JSON.stringify(object)
+    const url = document.getElementById("url").innerText
+    // Send the data to django for processing
+
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: json
+    }
+
+    fetch(url, options)
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(err => {
+            console.log("Something went wrong")
+            console.log(err)
+        })
+
 }
