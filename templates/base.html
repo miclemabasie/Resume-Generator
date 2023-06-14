@@ -12,6 +12,14 @@
     {% block extra_styles %}{% endblock extra_styles %}
    
     <title>Document</title>
+    <style>
+        /* Set the position to fixed and bottom/right to 0 */
+        .floating-btn {
+          position: fixed;
+          bottom: 80px;
+          right: 80px;
+        }
+      </style>
 </head>
 
 <body>
@@ -22,6 +30,12 @@
         {% block content %}
 
         {% endblock content %}
+
+        {% if section == "create" %}
+        <div class="container">
+            <button type="button" class="btn btn-success floating-btn">Download CV</button>
+          </div>
+        {% endif %}
 
     <script src="{% static "bootstrap/js/allinonebootstrap.js" %}"></script>
     {% block scripts %}{% endblock scripts %}

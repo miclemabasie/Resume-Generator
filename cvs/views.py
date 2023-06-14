@@ -44,6 +44,7 @@ def create_cv(request, template_id=None):
     profile = Profile.objects.get(user=user)
     template_name = "cvs/create.html"
     context = {
+        "section": "create",
         "template_id": template_id,
     }
     return render(request, template_name, context)

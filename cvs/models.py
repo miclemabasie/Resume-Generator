@@ -37,6 +37,8 @@ class PersonalInfomation(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+ 
+
 
 class Education(models.Model):
     cv = models.ForeignKey(CV, related_name="education", on_delete=models.CASCADE)
