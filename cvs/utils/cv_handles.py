@@ -1,8 +1,9 @@
 from ..models import CV, Profile, PersonalInfomation, Education, Experience, Skill, Language, Contact, Achievement, Project
 
 
-def create_personalInfo(data):
-    first_name = data["fistName"]
+def create_personalInfo(data, cv):
+    print(data)
+    first_name = data["firstName"]
     last_name = data["lastName"]
     image = data.get("image")
     headline = data["headline"]
@@ -14,8 +15,8 @@ def create_personalInfo(data):
     email = data["email"]
 
 
-    personal_obj = PersonalInfomation.create(first_name=first_name, last_name=last_name, image=image, bio=bio, dob=dob, pob=pob, location=location, haedline=headline)
-    personal_obj.save()
+    personal_obj = PersonalInfomation.objects.create(cv=cv, first_name=first_name, last_name=last_name, image=image, bio=bio, dob=dob, pob=pob, location=location, headline=headline, phone=phone, email=email)
+    # personal_obj.save()
     return personal_obj
 
 

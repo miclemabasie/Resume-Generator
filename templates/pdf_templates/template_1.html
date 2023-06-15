@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        .content__left {
+            flex: 1;
+            max-width: 400px;
+            padding-right: 20px;
+        }
+
+        .content__right {
+            flex: 1;
+            max-width: 400px;
+            padding-left: 20px;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-top: 0;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-top: 0;
+        }
+
+        .contact {
+            margin-top: 20px;
+        }
+
+        .contact__item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .contact__icon {
+            margin-right: 10px;
+        }
+
+        .language {
+            margin-top: 20px;
+        }
+
+        .language__item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .language__icon {
+            margin-right: 10px;
+        }
+
+        .skill {
+            margin-top: 20px;
+        }
+
+        .skill__item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .skill__icon {
+            margin-right: 10px;
+        }
+
+        .skill__level {
+            background-color: #eee;
+            height: 8px;
+            border-radius: 5px;
+            margin-left: 10px;
+            flex: 1;
+        }
+
+        .skill__level--beginner {
+            background-color: #ff6666;
+        }
+
+        .skill__level--intermediate {
+            background-color: #ffb366;
+        }
+
+        .skill__level--advanced {
+            background-color: #66b3ff;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>{{pinfo.first_name}} {{pinfo.last_name}}</h1>
+        <p>{{pinfo.headline}}</p>
+    </header>
+
+    <div class="content">
+        <div class="content__left">
+            <h2>Personal Information</h2>
+            <ul>
+                <li><strong>Frist Name: <span id="fname_tem">{{pinfo.first_name}}</span></strong> </li>
+                <li><strong>Last Name: <span id="lname_tem">{{pinfo.last_name}}</span></strong> </li>
+                <li><strong>Date of Birth: <span id="dob_tem">{{pinfo.dob}}</span></strong> </li>
+                <li><strong>place of Birth: <span id="pob_tem">{{pinfo.pob}}</span></strong> </li>
+                <li><strong>Location: <span id="location_tem">{{pinfo.location}}</span></strong></li>
+                <li><strong>Email: <span id="email_tem">{{pinfo.email}}</span></strong></li>
+                <li><strong>Phone: <span id="phone_tem">{{pinfo.phone}}</span></strong> </li>
+            </ul>
+
+            <h2>Education</h2>
+            <ul>
+                <li><strong>Bachelor's Degree in Computer Science</strong></li>
+                <li>University of XYZ</li>
+                <li>Graduated in May 2012</li>
+            </ul>
+
+            <h2>Achievements</h2>
+            <ul>
+                <li>Completed Project A, which resulted in a 30% increase in website traffic</li>
+                <li>Received Employee of the Month award in January 2015</li>
+            </ul>
+        </div>
+
+        <div class="content__right">
+            <h2>Experience</h2>
+            <ul>
+                <li><strong>Web Developer</strong></li>
+                <li>ABC Company</li>
+                <li>June 2012 - Present</li>
+                <li>Responsibilities:</li>
+                <ul>
+                    <li>Develop and maintain company websites using HTML, CSS, and JavaScript</li>
+                    <li>Collaborate with designers to implement website designs</li>
+                    <li>Optimize website performance and user experience</li>
+                </ul>
+
+                <li><strong>Web Designer</strong></li>
+                <li>DEF Agency</li>
+            </ul>
+        </div>
+</body>
+
+</html>

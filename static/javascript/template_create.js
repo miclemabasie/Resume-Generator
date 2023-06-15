@@ -1,4 +1,5 @@
 const CV = {
+    cvName: "",
     PersonalInfo: {
         firstName: "",
         lastName: "",
@@ -58,7 +59,8 @@ const CV = {
 };
 
 const generateBtn = document.getElementById("generateCV")
-
+const username = document.getElementById("username").dataset.username,
+    userID = document.getElementById("user-id").dataset.userid
 // Get the form elements
 const pInfoForm = document.getElementById("pinfo")
 
@@ -73,7 +75,8 @@ let firstName_tem = document.getElementById("fname_tem"),
     location_tem = document.getElementById("location_tem"),
     headline_tem = document.getElementById("headline_tem")
 
-console.log(email_tem)
+// Set the template name to username
+CV["cvName"] = `${username}-${userID}`
 
 pInfoForm.addEventListener("keyup", function (e) {
     // console.log(e.target.id)

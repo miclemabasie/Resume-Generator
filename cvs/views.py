@@ -15,6 +15,12 @@ from .models import (
     Project,
     Achievement,
 )
+import os
+from django.conf import settings
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from django.contrib.staticfiles import finders
 from django.contrib.auth.decorators import login_required
 
 
@@ -48,6 +54,8 @@ def create_cv(request, template_id=None):
     profile = Profile.objects.get(user=user)
     template_name = "cvs/create.html"
     context = {
+        "username": user.username,
+        "user_id": str(user.id)[-12:],
         "section": "create",
         "template_id": template_id,
     }
@@ -60,8 +68,13 @@ def generate_cv(request):
     user = request.user
     profile = Profile.objects.get(user=user)
 
+    
     if request.method == "POST":
+        # try to get cv from database
         data = json.loads(request.body)
+        # user_cv = get_object_or_404(CV, name=data["cvName"])
+        # cv = CV.objects.create(user = user, name="cv", )
+            # cv.save()
         personalinfo = data["PersonalInfo"]
         education_info = data["Education"]
         experience_info = data["Education"]
@@ -70,7 +83,32 @@ def generate_cv(request):
         projects_info = data["Education"]
         achievements_info = data["Education"]
         Language_info = data["Education"]
-        create_personalInfo(personalinfo)
-        create_education()
+        # personal_obj = create_personalInfo(personalinfo, cv)
+        # print(personal_obj)
+
         return JsonResponse({"message": "OK"})
+
+
+@login_required
+def download_pdf(request):
+    template_path = 'pdf_templates/template_1.html'
+    user = request.user
+    personalInfo = PersonalInfomation.objects.get(cv__user=user)
+    context = {"pinfo": personalInfo}
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+    print(personalInfo.headline)
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funny view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+       
+        
    
