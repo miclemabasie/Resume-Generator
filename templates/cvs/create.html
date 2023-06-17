@@ -73,6 +73,10 @@
         {% elif template_id == 3 %}
             {% include "cv_templates/template_3.html" %}
         {% endif %}
+
+        {% if user_cv %}
+            <div id="usercv" >usercv</div>
+        {% endif %}
         <p id="url" >{% url 'cvs:generate-cv' %}</p>
         <p id="url1" data-createurl="{% url 'cvs:create-cv' 1 %}" ></p>
 {% endblock content %}

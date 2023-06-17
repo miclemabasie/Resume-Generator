@@ -1,4 +1,5 @@
-const CV = {
+// Construct new data for the new user
+CV = {
     cvName: "",
     PersonalInfo: {
         firstName: "",
@@ -63,12 +64,7 @@ const CV = {
     }
 };
 
-document.addEventListener("DOMContentLoaded", function (e) {
-    const d = getUserCVData()
-    console.log(d)
-
-})
-
+let globaldata;
 function getUserCVData() {
     // Request user data if it already exists in the database
     const url1 = document.getElementById("url1").dataset.createurl
@@ -80,9 +76,27 @@ function getUserCVData() {
     }
     fetch(`${url1}?data=data`, options)
         .then(response => response.json())
-        .then(data => console.log("done"))
+        .then(data => {
+            // console.log(data)
+            globaldata = data;
+            // Update the form field values with data from django
+
+            // update the template with data from django
+            updateTemplatePersonalInfo(data["personal_info"])
+        })
+
     return false;
 }
+
+document.addEventListener("DOMContentLoaded", function (e) {
+    if (document.getElementById("usercv")) {
+        getUserCVData()
+    }
+
+
+})
+
+
 const generateBtn = document.getElementById("generateCV")
 const username = document.getElementById("username").dataset.username,
     userID = document.getElementById("user-id").dataset.userid
@@ -90,7 +104,7 @@ const username = document.getElementById("username").dataset.username,
 const pInfoForm = document.getElementById("pinfo")
 
 // Get the template placeholders
-let firstName_tem = document.getElementById("fname_tem"),
+const firstName_tem = document.getElementById("fname_tem"),
     lastName_tem = document.getElementById("lname_tem"),
     dob_tem = document.getElementById("dob_tem"),
     email_tem = document.getElementById("email_tem"),
@@ -166,4 +180,18 @@ function sendCVData(object) {
             console.log(err)
         })
 
+}
+
+
+function updateTemplatePersonalInfo(personal_data) {
+    // name_tem = personal_data["name"]
+    firstName_tem.innerHTML = personal_data["first_name"]
+    lastName_tem.innerHTML = personal_data["last_name"]
+    dob_tem.innerHTML = personal_data["dob"]
+    email_tem.innerHTML = personal_data["email"]
+    pob_tem.innerHTML = personal_data["pob"]
+    phone_tem.innerHTML = personal_data["phone"]
+    location_tem.innerHTML = personal_data['location']
+    headline_tem.innerHTML = personal_data['headline']
+    name_tem.innerHTML = `${firstName_tem.innerHTML} ${lastName_tem.innerHTML}`
 }

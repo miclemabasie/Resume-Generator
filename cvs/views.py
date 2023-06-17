@@ -71,12 +71,13 @@ def create_cv(request, template_id=None):
     
    
     context = {
-        
         "username": user.username,
         "user_id": str(user.id)[-12:],
         "section": "create",
         "template_id": template_id,
     }
+    if user_cv:
+        context["user_cv"] = True
     return render(request, template_name, context)
 
 
