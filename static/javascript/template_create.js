@@ -14,27 +14,33 @@ const CV = {
         summary: "",
     },
     Skills: {
-        technical: [],
-        soft: []
+        // technical: [],
+        // soft: []
+        name: "",
+        level: "",
     },
     Education: {
-        degree: "",
+        name: "",
         major: "",
         school: "",
-        date: "",
-        GPA: "",
+        start: "",
+        end: "",
+        institution: "",
         description: ""
     },
     Experience: {
         position: "",
         company: "",
-        date: "",
+        start: "",
+        end: "",
         location: "",
         description: "",
-        achievements: []
+        // achievements: []
     },
     Language: {
-        languages: []
+        // languages: []
+        lang_name: "",
+        level: "",
     },
     Contact: {
         linkedin: "",
@@ -43,10 +49,10 @@ const CV = {
         other: []
     },
     Projects: {
+        // date: "",
+        // technologies: [],
         name: "",
-        date: "",
         description: "",
-        technologies: [],
         link: ""
     },
     Achievements: {

@@ -78,25 +78,36 @@ def generate_cv(request):
         education_info = data["Education"]
         experience_info = data["Education"]
         skills_info = data["Education"]
-        education_info = data["Education"]
         projects_info = data["Education"]
         achievements_info = data["Education"]
-        Language_info = data["Education"]
+        language_info = data["Education"]
         # Get the CV associated to the current logged in user
         user_cv = CV.objects.filter(name=data["cvName"]).first()
         print(user_cv)
         if user_cv:
             print("There is a CV for this user, we need updates only")
             # Run update routine functions
-            personalInfo = PersonalInfomation.objects.get(cv=user_cv)
-            update_personalInfo(personalInfo)
+            update_personalInfo(personalinfo, user_cv)
+            update_education(education_info, user_cv)
+            update_experience(experience_info, user_cv)
+            update_skills(skills_info, user_cv)
+            update_project(projects_info, user_cv)
+            update_achieve(achievements_info, user_cv)
+            update_language(language_info, user_cv)
+            return JsonResponse({"message": "succesfully updated"})
 
         else:
-            pass
-            # personal_obj = create_personalInfo(personalinfo, cv)
-            # print(personal_obj)
+            print("New instance of cv creation")
+            cv = CV.objects.create(user=user, name=data["cvName"])
+            create_personalInfo(personalinfo, cv)
+            create_education(education_info, cv)
+            create_experience(experience_info, cv)
+            create_skills(skills_info, cv)
+            create_project(projects_info, cv)
+            create_achieve(achievements_info, cv)
+            create_language(language_info, cv)
+            return JsonResponse({"message": "successfully created"})
 
-        return JsonResponse({"message": "OK"})
 
 
 @login_required

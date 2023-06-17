@@ -16,8 +16,8 @@ def create_personalInfo(data, cv):
 
 
     personal_obj = PersonalInfomation.objects.create(cv=cv, first_name=first_name, last_name=last_name, image=image, bio=bio, dob=dob, pob=pob, location=location, headline=headline, phone=phone, email=email)
-    # personal_obj.save()
-    return personal_obj
+    personal_obj.save()
+    return None
 
 
 

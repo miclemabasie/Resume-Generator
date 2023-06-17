@@ -1,27 +1,34 @@
 from ..models import CV, Profile, PersonalInfomation, Education, Experience, Skill, Language, Contact, Achievement, Project
 
 
-def update_personalInfo(data, object):
-    datafirst_name = data["firstName"]
-    last_name = data["lastName"]
-    image = data.get("image")
-    headline = data["headline"]
-    bio = data.get("summary") or ""
-    location = data["location"]
-    pob = data["pob"]
-    dob = data["dob"]
-    phone = data["phone"]
-    email = data["email"]
+def update_personalInfo(data, user_cv):
+    # Get the personal info associated with this CV
+    personal_info_obj = PersonalInfomation.objects.get(cv=user_cv)
+    # Update individual objects in that instance
+    personal_info_obj.first_name = data["firstName"]
+    personal_info_obj.last_name = data["lastName"]
+    personal_info_obj.image = data.get("image")
+    personal_info_obj.headline = data["headline"]
+    personal_info_obj.bio = data.get("summary") or ""
+    personal_info_obj.location = data["location"]
+    personal_info_obj.pob = data["pob"]
+    personal_info_obj.dob = data["dob"]
+    personal_info_obj.phone = data["phone"]
+    personal_info_obj.email = data["email"]
+
+    personal_info_obj.save()
+    return None
 
 
-    personal_obj = PersonalInfomation.objects.create(cv=cv, first_name=first_name, last_name=last_name, image=image, bio=bio, dob=dob, pob=pob, location=location, headline=headline, phone=phone, email=email)
-    # personal_obj.save()
-    return personal_obj
 
-
-
-def update_education(data):
-    print(data)
+def update_education(data, user_cv):
+    # Get the education models related to this CV
+    education_obj = Education.objects.get(cv=cv)
+    # udate individual data of this instance
+    education_obj.name = data["title"]
+    education_obj.start = data["start"]
+    education_obj.end = data["end"]
+    education_obj.institution = data["institution"]
 
 def update_experience(data, cv):
     print(data)

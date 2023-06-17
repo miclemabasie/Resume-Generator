@@ -48,7 +48,10 @@ class Education(models.Model):
     name = models.CharField(verbose_name=_("Name"), max_length=50)
     start = models.DateTimeField(verbose_name=_("Start"))
     end = models.DateTimeField(verbose_name=_("End"))
+    major = models.CharField(verbose_name=_("Major"), max_length=100, blank=True, null=True)
     institution = models.CharField(verbose_name=_("Institution"), max_length=200)
+    description = models.CharField(verbose_name=_("Description"), max_length=300, blank=True, null=True)
+
 
 
 class Experience(models.Model):
@@ -59,9 +62,10 @@ class Experience(models.Model):
     company = models.CharField(
         verbose_name=_("Company"), max_length=50, null=True, blank=True
     )
-    role = models.CharField(
+    position = models.CharField(
         verbose_name=_("Role"), max_length=50, null=True, blank=True
     )
+    achievements = models.CharField(verbose_name=_("Your Achievements"), max_length=300, blank=True, null=True)
 
 
 class Skill(models.Model):
@@ -82,8 +86,9 @@ class Language(models.Model):
 
 class Contact(models.Model):
     cv = models.ForeignKey(CV, related_name="contact", on_delete=models.CASCADE)
-    email = models.EmailField(verbose_name=_("Email"))
-    phone = models.CharField(verbose_name=_("Phone"), max_length=20)
+    linkedin = models.EmailField(verbose_name=_("LinkedIn"), blank=True, null=True)
+    github = models.CharField(verbose_name=_("Github"), max_length=20, blank=True, null=True)
+    website = models.CharField(verbose_name=_("Website"), max_length=20, blank=True, null=True)
     links = models.CharField(verbose_name=_("Links"), max_length=200)
 
 
@@ -99,6 +104,9 @@ class Project(models.Model):
 class Achievement(models.Model):
     cv = models.ForeignKey(CV, related_name="achievements", on_delete=models.CASCADE)
     name = models.CharField(verbose_name=_("Achievement"), max_length=100)
+    date = models.DateTimeField(verbose_name=_("Date"), null=True, blank=True)
+    organization = models.CharField(verbose_name=_("Orgranization"), max_length=100, blank=True, null=True)
     description = models.TextField(
         verbose_name=_("Describe your achievement"), null=True, blank=True
     )
+    link = models.CharField(verbose_name=_("Link"), max_length=100, blank=True, null=True)
