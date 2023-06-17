@@ -26,11 +26,11 @@ class Profile(models.Model):
 
 
 class PersonalInfomation(models.Model):
-    cv = models.ForeignKey(CV, related_name="personal_info", on_delete=models.CASCADE)
+    cv = models.OneToOneField(CV, related_name="personal_info", on_delete=models.CASCADE)
     first_name = models.CharField(verbose_name=_("First Name"), max_length=255)
     last_name = models.CharField(verbose_name=_("Last Name"), max_length=255)
     image = models.ImageField(verbose_name=_("Image"), upload_to="images")
-    bio = models.TextField(verbose_name=_("Bio"))
+    summary = models.CharField(verbose_name=_("Bio"), max_length=300, blank=True, null=True)
     dob = models.DateTimeField(verbose_name=_("Date Of Birth"))
     location = models.CharField(verbose_name=_("Location"), max_length=100)
     headline = models.CharField(verbose_name=_("Headline"), max_length=100)
@@ -62,14 +62,15 @@ class Experience(models.Model):
     company = models.CharField(
         verbose_name=_("Company"), max_length=50, null=True, blank=True
     )
-    position = models.CharField(
+    role = models.CharField(
         verbose_name=_("Role"), max_length=50, null=True, blank=True
     )
     achievements = models.CharField(verbose_name=_("Your Achievements"), max_length=300, blank=True, null=True)
+    description = models.CharField(verbose_name=_("Description"), max_length=300, blank=True, null=True)
 
 
 class Skill(models.Model):
-    cv = models.ForeignKey(CV, related_name="skills", on_delete=models.CASCADE)
+    cv = models.OneToOneField(CV, related_name="skills", on_delete=models.CASCADE)
     name = models.CharField(verbose_name=_("Skill Name"), max_length=100)
     level = models.IntegerField(
         validators=[MinValueValidator(0), MaxValueValidator(100)], default=0
@@ -106,7 +107,7 @@ class Achievement(models.Model):
     name = models.CharField(verbose_name=_("Achievement"), max_length=100)
     date = models.DateTimeField(verbose_name=_("Date"), null=True, blank=True)
     organization = models.CharField(verbose_name=_("Orgranization"), max_length=100, blank=True, null=True)
-    description = models.TextField(
-        verbose_name=_("Describe your achievement"), null=True, blank=True
+    description = models.CharField(
+        verbose_name=_("Describe your achievement"), null=True, blank=True, max_length=300
     )
     link = models.CharField(verbose_name=_("Link"), max_length=100, blank=True, null=True)

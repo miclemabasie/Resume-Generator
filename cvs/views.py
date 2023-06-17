@@ -4,6 +4,7 @@ from cvs.utils.update_handlers import *
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
+from rest_framework.response import Response
 from .models import (
     CV,
     Profile,
@@ -16,6 +17,7 @@ from .models import (
     Project,
     Achievement,
 )
+from .serializers import CVModelSerializer
 import os
 from django.conf import settings
 from django.http import HttpResponse
@@ -52,9 +54,24 @@ def profile_view(request):
 @login_required
 def create_cv(request, template_id=None):
     user = request.user
+    # Check if javascript is requesting for user CV data
+    if request.GET.get("data"):
+        # Get the users data
+        user_cv = CV.objects.filter(user=user).last()
+        serializer = CVModelSerializer(user_cv)
+        # return the results to javascript
+        return JsonResponse(serializer.data)
+        # return JsonResponse({"data": "User data for editing"})
     profile = Profile.objects.get(user=user)
     template_name = "cvs/create.html"
+    try:
+        user_cv = CV.objects.filter(user=user).last()
+    except CV.DoesNotExist:
+        user_cv = None
+    
+   
     context = {
+        
         "username": user.username,
         "user_id": str(user.id)[-12:],
         "section": "create",
@@ -88,12 +105,12 @@ def generate_cv(request):
             print("There is a CV for this user, we need updates only")
             # Run update routine functions
             update_personalInfo(personalinfo, user_cv)
-            update_education(education_info, user_cv)
-            update_experience(experience_info, user_cv)
-            update_skills(skills_info, user_cv)
-            update_project(projects_info, user_cv)
-            update_achieve(achievements_info, user_cv)
-            update_language(language_info, user_cv)
+            # update_education(education_info, user_cv)
+            # update_experience(experience_info, user_cv)
+            # update_skills(skills_info, user_cv)
+            # update_project(projects_info, user_cv)
+            # update_achieve(achievements_info, user_cv)
+            # update_language(language_info, user_cv)
             return JsonResponse({"message": "succesfully updated"})
 
         else:

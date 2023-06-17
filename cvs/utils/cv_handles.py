@@ -7,7 +7,7 @@ def create_personalInfo(data, cv):
     last_name = data["lastName"]
     image = data.get("image")
     headline = data["headline"]
-    bio = data.get("summary") or ""
+    summary = data.get("summary") or ""
     location = data["location"]
     pob = data["pob"]
     dob = data["dob"]
@@ -15,7 +15,7 @@ def create_personalInfo(data, cv):
     email = data["email"]
 
 
-    personal_obj = PersonalInfomation.objects.create(cv=cv, first_name=first_name, last_name=last_name, image=image, bio=bio, dob=dob, pob=pob, location=location, headline=headline, phone=phone, email=email)
+    personal_obj = PersonalInfomation.objects.create(cv=cv, first_name=first_name, last_name=last_name, image=image, summary=summary, dob=dob, pob=pob, location=location, headline=headline, phone=phone, email=email)
     personal_obj.save()
     return None
 

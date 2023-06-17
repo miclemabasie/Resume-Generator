@@ -22,18 +22,17 @@ const CV = {
     Education: {
         name: "",
         major: "",
-        school: "",
         start: "",
         end: "",
         institution: "",
         description: ""
     },
     Experience: {
-        position: "",
+        title: "",
+        role: "",
         company: "",
         start: "",
         end: "",
-        location: "",
         description: "",
         // achievements: []
     },
@@ -64,6 +63,26 @@ const CV = {
     }
 };
 
+document.addEventListener("DOMContentLoaded", function (e) {
+    const d = getUserCVData()
+    console.log(d)
+
+})
+
+function getUserCVData() {
+    // Request user data if it already exists in the database
+    const url1 = document.getElementById("url1").dataset.createurl
+    const options = {
+        method: "GET",
+        headers: {
+            "content-type": "application/json",
+        }
+    }
+    fetch(`${url1}?data=data`, options)
+        .then(response => response.json())
+        .then(data => console.log("done"))
+    return false;
+}
 const generateBtn = document.getElementById("generateCV")
 const username = document.getElementById("username").dataset.username,
     userID = document.getElementById("user-id").dataset.userid

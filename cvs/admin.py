@@ -16,7 +16,7 @@ from .models import (
 class EducationInline(admin.TabularInline):
     model = Education
     extra = 2  # displays only one extra form
-    fields = ["name", "institution", "start", "end"]
+    fields = ["name", "major", "institution", "start", "end"]
     # readonly_fields = ["created_at"]
     verbose_name_plural = "Educational Background"
     can_delete = False
@@ -25,7 +25,7 @@ class EducationInline(admin.TabularInline):
 class ExperienceInline(admin.TabularInline):
     model = Experience
     extra = 2  # displays only one extra form
-    fields = ["title", "start", "end", "company", "role"]
+    fields = ["title", "description", "start", "end", "company", "role"]
     verbose_name_plural = "Experiences"
     can_delete = False
 
@@ -49,7 +49,7 @@ class LanguageInline(admin.TabularInline):
 class ContactInline(admin.TabularInline):
     model = Contact
     extra = 2  # displays only one extra form
-    fields = ["email", "phone", "links"]
+    fields = ["linkedin", "github", "website", "links"]
     verbose_name_plural = "Contact Info"
     can_delete = False
 
@@ -65,15 +65,15 @@ class ProjectInline(admin.TabularInline):
 class AchievementInline(admin.TabularInline):
     model = Achievement
     extra = 1  # displays only one extra form
-    fields = ["name", "description"]
-    verbose_name_plural = "Educational Background"
+    fields = ["name", "date", "organization", "description"]
+    verbose_name_plural = "Your Achievements"
     can_delete = False
 
 
 class PersonalInfomationInline(admin.TabularInline):
     model = PersonalInfomation
     extra = 1  # displays only one extra form
-    fields = ["cv", "first_name", "last_name", "dob", "location", "pob"]
+    fields = ["first_name", "last_name", "summary", "dob", "location", "pob"]
     verbose_name_plural = "Personal Information"
     can_delete = False
 

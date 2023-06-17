@@ -74,6 +74,7 @@
             {% include "cv_templates/template_3.html" %}
         {% endif %}
         <p id="url" >{% url 'cvs:generate-cv' %}</p>
+        <p id="url1" data-createurl="{% url 'cvs:create-cv' 1 %}" ></p>
 {% endblock content %}
     </div>
 </div>
