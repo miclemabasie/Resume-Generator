@@ -1,5 +1,6 @@
 import json
 from cvs.utils.cv_handles import *
+from cvs.utils.update_handlers import *
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
@@ -72,9 +73,7 @@ def generate_cv(request):
     if request.method == "POST":
         # try to get cv from database
         data = json.loads(request.body)
-        # user_cv = get_object_or_404(CV, name=data["cvName"])
-        # cv = CV.objects.create(user = user, name="cv", )
-            # cv.save()
+        # Extract the data coming from the fetch API
         personalinfo = data["PersonalInfo"]
         education_info = data["Education"]
         experience_info = data["Education"]
@@ -83,8 +82,19 @@ def generate_cv(request):
         projects_info = data["Education"]
         achievements_info = data["Education"]
         Language_info = data["Education"]
-        # personal_obj = create_personalInfo(personalinfo, cv)
-        # print(personal_obj)
+        # Get the CV associated to the current logged in user
+        user_cv = CV.objects.filter(name=data["cvName"]).first()
+        print(user_cv)
+        if user_cv:
+            print("There is a CV for this user, we need updates only")
+            # Run update routine functions
+            personalInfo = PersonalInfomation.objects.get(cv=user_cv)
+            update_personalInfo(personalInfo)
+
+        else:
+            pass
+            # personal_obj = create_personalInfo(personalinfo, cv)
+            # print(personal_obj)
 
         return JsonResponse({"message": "OK"})
 

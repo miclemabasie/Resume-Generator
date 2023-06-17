@@ -132,8 +132,8 @@ function sendCVData(object) {
         },
         body: json
     }
-
-    fetch(url, options)
+    console.log(url)
+    fetch(`${url}`, options)
         .then(response => response.json())
         .then(data => console.log(data))
         .catch(err => {
