@@ -137,9 +137,10 @@ def download_pdf(request):
     user = request.user
     personalInfo = PersonalInfomation.objects.get(cv__user=user)
     context = {"pinfo": personalInfo}
+    cv_name = f"{user.username}-cv"
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type="application/pdf")
-    response["Content-Disposition"] = 'attachment; filename="report.pdf"'
+    response["Content-Disposition"] = f'filename="{cv_name}.pdf"'
     # find the template and render it.
     template = get_template(template_path)
     html = template.render(context)

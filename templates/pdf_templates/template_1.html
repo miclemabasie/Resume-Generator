@@ -7,16 +7,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         header {
             background-color: #333;
             color: #fff;
-            padding: 20px;
+            padding: 50px;
             text-align: center;
         }
 
         h1 {
             margin: 0;
             font-size: 36px;
+        }
+
+        .headline {
+            font-size: 20px;
         }
 
         .content {
@@ -124,12 +133,12 @@
 <body>
     <header>
         <h1>{{pinfo.firstName}} {{pinfo.lastName}}</h1>
-        <p>{{pinfo.headline}}</p>
+        <p class="headline">{{pinfo.headline}}</p>
     </header>
 
     <div class="content">
         <div class="content__left">
-            <h2>Personal Information</h2>
+            <h2 style="padding-top: 30px">Personal Information</h2>
             <ul>
                 <li><strong>Frist Name: <span id="fname_tem">{{pinfo.firstName}}</span></strong> </li>
                 <li><strong>Last Name: <span id="lname_tem">{{pinfo.lastName}}</span></strong> </li>
