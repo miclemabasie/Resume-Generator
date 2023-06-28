@@ -1,12 +1,23 @@
-from ..models import CV, Profile, PersonalInfomation, Education, Experience, Skill, Language, Contact, Achievement, Project
+from ..models import (
+    CV,
+    Profile,
+    PersonalInfomation,
+    Education,
+    Experience,
+    Skill,
+    Language,
+    Contact,
+    Achievement,
+    Project,
+)
 
 
 def update_personalInfo(data, user_cv):
     # Get the personal info associated with this CV
     personal_info_obj = PersonalInfomation.objects.get(cv=user_cv)
     # Update individual objects in that instance
-    personal_info_obj.first_name = data["firstName"]
-    personal_info_obj.last_name = data["lastName"]
+    personal_info_obj.firstName = data["firstName"]
+    personal_info_obj.lastName = data["lastName"]
     personal_info_obj.image = data.get("image")
     personal_info_obj.headline = data["headline"]
     personal_info_obj.summary = data.get("summary") or ""
@@ -18,6 +29,7 @@ def update_personalInfo(data, user_cv):
 
     personal_info_obj.save()
     return None
+
 
 def update_education(data, user_cv):
     # Get the education models related to this CV
@@ -35,6 +47,7 @@ def update_education(data, user_cv):
     education_obj.save()
     return None
 
+
 def update_experience(data, user_cv):
     # Get Experience obj for this user_cv
     experience_obj = Experience.objects.filter(cv=user_cv).first()
@@ -51,6 +64,7 @@ def update_experience(data, user_cv):
     experience_obj.save()
     return None
 
+
 def update_skills(data, user_cv):
     # Get the skill_ob for this cv obj
     skill_obj = Skill.objects.get(cv=user_cv)
@@ -58,12 +72,14 @@ def update_skills(data, user_cv):
     skill_obj.name = data["name"]
     skill_obj.level = int(data["level"])
 
+
 def update_language(data, user_cv):
     # get Language object for this user CV
     language_obj = Language.objects.get(cv=user_cv)
     # udate language obj data
     language_obj.lang_name = data["lang_name"]
     language_obj.level = data["level"]
+
 
 def update_project(data, user_cv):
     # get project obj for this user CV
@@ -75,6 +91,7 @@ def update_project(data, user_cv):
 
     project_obj.save()
     return None
+
 
 def update_achieve(data, user_cv):
     # Get ach for this user_cv
@@ -89,6 +106,7 @@ def update_achieve(data, user_cv):
 
     ach_obj.save()
     return None
+
 
 def update_contact(data, user_cv):
     # Get contact_obj for this user_cv

@@ -29,7 +29,7 @@ class PersonalInfomation(models.Model):
     cv = models.OneToOneField(
         CV, related_name="personal_info", on_delete=models.CASCADE
     )
-    firsName = models.CharField(verbose_name=_("First Name"), max_length=255)
+    firstName = models.CharField(verbose_name=_("First Name"), max_length=255)
     lastName = models.CharField(verbose_name=_("Last Name"), max_length=255)
     image = models.ImageField(verbose_name=_("Image"), upload_to="images")
     summary = models.CharField(

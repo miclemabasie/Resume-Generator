@@ -91,14 +91,24 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
         return false;
     }
+    // deactivate the download button unless CV is ready
+    const downBtn = document.getElementById("download-btn")
+    downBtn.style.pointerEvents = "none";
+
     // check if CV for user already exists in the database
     if (document.getElementById("usercv")) {
         getUserCVData()
-        console.log(globaldata)
+        downloadBtn(downBtn)
     }
 
 
+
 })
+
+// function to activate download btn
+function downloadBtn(btn) {
+    btn.style.pointerEvents = ""
+}
 
 
 const generateBtn = document.getElementById("generateCV")
@@ -176,13 +186,8 @@ function sendCVData(object) {
 
 
 function updateTemplatePersonalInfo(personal_data, update) {
-    if (update === true) {
-        firstName_tem.innerHTML = personal_data["first_name"]
-        lastName_tem.innerHTML = personal_data["last_name"]
-    } else {
-        firstName_tem.innerHTML = personal_data["firstName"]
-        lastName_tem.innerHTML = personal_data["lastName"]
-    }
+    firstName_tem.innerHTML = personal_data["firstName"]
+    lastName_tem.innerHTML = personal_data["lastName"]
     // name_tem = personal_data["name"]
     dob_tem.innerHTML = personal_data["dob"]
     email_tem.innerHTML = personal_data["email"]
@@ -195,8 +200,8 @@ function updateTemplatePersonalInfo(personal_data, update) {
 
 // Function to update form fields if data already exists about the user
 function updatePersonalInfoForm(personal_data, form) {
-    form.firstName.value = personal_data["first_name"]
-    form.lastName.value = personal_data["last_name"]
+    form.firstName.value = personal_data["firstName"]
+    form.lastName.value = personal_data["lastName"]
     form.location.value = personal_data["location"]
     form.headline.value = personal_data["headline"]
     form.pob.value = personal_data["pob"]

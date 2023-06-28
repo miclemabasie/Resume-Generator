@@ -74,8 +74,8 @@ class PersonalInfomationInline(admin.TabularInline):
     model = PersonalInfomation
     extra = 1  # displays only one extra form
     fields = [
-        "first_name",
-        "last_name",
+        "firstName",
+        "lastName",
         "headline",
         "summary",
         "dob",

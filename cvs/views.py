@@ -2,7 +2,8 @@ import json
 from cvs.utils.cv_handles import *
 from cvs.utils.update_handlers import *
 from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
+from django.urls import reverse
 from django.shortcuts import render, get_object_or_404
 from rest_framework.response import Response
 from .models import (
@@ -114,6 +115,8 @@ def generate_cv(request):
             # update_achieve(achievements_info, user_cv)
             # update_language(language_info, user_cv)
             return JsonResponse({"message": "succesfully updated"})
+            # return HttpResponseRedirect("/download-cv/")
+
         else:
             print("New instance of cv creation")
             cv = CV.objects.create(user=user, name=data["cvName"])
@@ -125,6 +128,7 @@ def generate_cv(request):
             # create_achieve(achievements_info, cv)
             # create_language(language_info, cv)
             return JsonResponse({"message": "successfully created"})
+            # return HttpResponseRedirect("/download-cv")
 
 
 @login_required
