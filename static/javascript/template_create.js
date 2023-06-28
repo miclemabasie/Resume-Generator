@@ -98,9 +98,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
         fetch(`${url1}?data=data`, options)
             .then(response => response.json())
             .then(data => {
-                console.log(data)
                 CV["PersonalInfo"] = data["personal_info"]
-                console.log(CV)
                 // Update the form field values with data from django
                 updatePersonalInfoForm(data["personal_info"], pInfoForm)
                 updateExpForm(data['experiences'][0], expInfoForm)
@@ -154,13 +152,11 @@ expInfoForm.addEventListener("keyup", function (e) {
     let element = e.target.id
     let value = e.target.value
     updateCVData(CV, "Experience", element, value)
-    console.log(CV)
     updateTemplateExpInfo(CV["Experience"])
 })
 
 function updateCVData(data, form, element, value) {
     data[form][element] = value
-    console.log(form, element, value)
 }
 
 function updateTemplate(template_id, cv_json, form) {
@@ -187,13 +183,11 @@ function sendCVData(object) {
         },
         body: json
     }
-    console.log(url)
     fetch(`${url}`, options)
         .then(response => response.json())
         .then(data => console.log(data)) // Data from Django
         .catch(err => {
             console.log("Something went wrong")
-            console.log(err)
         })
 
 }

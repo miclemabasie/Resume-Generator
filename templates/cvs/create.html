@@ -65,54 +65,107 @@
 
         </form>
         <hr>
-        {% comment %} Skills {% endcomment %}
-        <div class="skills">
+        {% comment %} Experience {% endcomment %}
+        <div class="experience">
             <h2>Experience</h2>
-            <form style="border: 1px solid #ccc; padding: 30px"   id="expInfo">
-                <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="title">Title</label>
-                    <input type="text" class="form-control" id="title" name="title">
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="company">Company</label>
-                    <input type="text" class="form-control" id="company" name="company">
-                </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-5 mb-3">
-                        <label for="start">Start Date</label>
-                        <input type="date" class="form-control" id="start" name="start">
+            <div class="exps" id="expFormContainer">
+                <form class="expForm" style="border: 1px solid #ccc; padding: 30px; margin-bottom: 30px"   id="expInfo">
+                    <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="title">Title</label>
+                        <input type="text" class="form-control" id="title" name="title">
                     </div>
-                    <div class="col-md-5 mb-3">
-                        <label for="end">End Date</label>
-                        <input type="date" class="form-control" id="end" name="end">
+                    <div class="col-md-6 mb-3">
+                        <label for="company">Company</label>
+                        <input type="text" class="form-control" id="company" name="company">
                     </div>
-                    <div class="col-auto mb-3">
-                        <label class="present" for="present">Present</label>
-                        <input sytle="font-size=20px;" class="form-control check" type="checkbox" name="present" id="present">               
                     </div>
-                </div>
-                <div class="row">    
-                <div class="col-md-12 mb-3">
-                    <label for="description">Description</label>
-                    <input class="form-control" id="description" name="description">
-                </div>
-                </div>            
-            </form>
+                    <div class="row">
+                        <div class="col-md-5 mb-3">
+                            <label for="start">Start Date</label>
+                            <input type="date" class="form-control" id="start" name="start">
+                        </div>
+                        <div class="col-md-5 mb-3">
+                            <label for="end">End Date</label>
+                            <input type="date" class="form-control" id="end" name="end">
+                        </div>
+                        <div class="col-auto mb-3">
+                            <label class="present" for="present">Present</label>
+                            <input sytle="font-size=20px;" class="form-control check" type="checkbox" name="present" id="present">               
+                        </div>
+                    </div>
+                    <div class="row">    
+                    <div class="col-md-12 mb-3">
+                        <label for="description">Description</label>
+                        <input class="form-control" id="description" name="description">
+                    </div>
+                    </div>            
+                </form>
+            </div>
             <div class="row pt-2">
                 <div class="col-md-6">
                 </div>
                 <div style="display: flex; justify-content: space-between" class="col-md-6 ml-auto">
                     <div></div>
-                    <button type="button" class="btn btn-success btn-sm">
+                    <button data-form="expInfo" id="add-exp" type="button" class="btn btn-success btn-sm">
                         <i class="fas fa-plus"></i>
                         +
                     </button>
                 </div>
             </div>
         </div>
-        {% comment %} end of skills {% endcomment %}
+        {% comment %} end of Experience {% endcomment %}
+        <hr>
+        {% comment %} Experience {% endcomment %}
+        <div class="experience">
+            <h2>Education</h2>
+            <div class="exps" id="expFormContainer">
+                <form class="expForm" style="border: 1px solid #ccc; padding: 30px; margin-bottom: 30px"   id="expInfo">
+                    <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="title">Title</label>
+                        <input type="text" class="form-control" id="title" name="title">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="company">Company</label>
+                        <input type="text" class="form-control" id="company" name="company">
+                    </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 mb-3">
+                            <label for="start">Start Date</label>
+                            <input type="date" class="form-control" id="start" name="start">
+                        </div>
+                        <div class="col-md-5 mb-3">
+                            <label for="end">End Date</label>
+                            <input type="date" class="form-control" id="end" name="end">
+                        </div>
+                        <div class="col-auto mb-3">
+                            <label class="present" for="present">Present</label>
+                            <input sytle="font-size=20px;" class="form-control check" type="checkbox" name="present" id="present">               
+                        </div>
+                    </div>
+                    <div class="row">    
+                    <div class="col-md-12 mb-3">
+                        <label for="description">Description</label>
+                        <input class="form-control" id="description" name="description">
+                    </div>
+                    </div>            
+                </form>
+            </div>
+            <div class="row pt-2">
+                <div class="col-md-6">
+                </div>
+                <div style="display: flex; justify-content: space-between" class="col-md-6 ml-auto">
+                    <div></div>
+                    <button data-form="expInfo" id="add-exp" type="button" class="btn btn-success btn-sm">
+                        <i class="fas fa-plus"></i>
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% comment %} end of Experience {% endcomment %}
         <hr>
         
     </div>
@@ -140,5 +193,6 @@
     const url = 
 {% block scripts %}
     <script src="{% static "javascript/template_create.js" %}"></script>
+    <script src="{% static "javascript/template_create_add.js" %}"></script>
 {% endblock scripts %}
 </script>

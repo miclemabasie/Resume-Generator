@@ -137,7 +137,9 @@ def download_pdf(request):
     template_path = "pdf_templates/template_1.html"
     user = request.user
     personalInfo = PersonalInfomation.objects.get(cv__user=user)
-    context = {"pinfo": personalInfo}
+    experienceInfo = Experience.objects.get(cv__user=user)
+    pdf_data = {"pinfo": personalInfo, "expinfo": experienceInfo}
+    context = {"data": pdf_data}
     cv_name = f"{user.username}-cv"
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type="application/pdf")
