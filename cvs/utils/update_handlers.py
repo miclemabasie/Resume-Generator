@@ -10,6 +10,8 @@ from ..models import (
     Achievement,
     Project,
 )
+from cvs.utils.cv_handles import *
+
 
 
 def update_personalInfo(data, user_cv):
@@ -51,18 +53,22 @@ def update_education(data, user_cv):
 def update_experience(data, user_cv):
     # Get Experience obj for this user_cv
     experience_obj = Experience.objects.filter(cv=user_cv).first()
-    # Update data
-    experience_obj.title = data["title"]
-    experience_obj.role = data["role"]
-    experience_obj.company = data["company"]
-    if data["start"] != "":
-        experience_obj.start = data["start"]
-    if data["end"] != "":
-        experience_obj.end = data["end"]
-    experience_obj.description = data["description"]
-
-    experience_obj.save()
-    return None
+    if experience_obj:
+        print("Updating experiences")
+        # Update data
+        experience_obj.title = data["title"]
+        experience_obj.role = data["role"]
+        experience_obj.company = data["company"]
+        if data["start"] != "":
+            experience_obj.start = data["start"]
+        if data["end"] != "":
+            experience_obj.end = data["end"]
+        experience_obj.description = data["description"]
+        experience_obj.save()
+    else:
+        # create a new experience instance incase it does not exist already
+        create_experience(data, user_cv)
+    return True
 
 
 def update_skills(data, user_cv):

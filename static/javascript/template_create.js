@@ -64,7 +64,25 @@ CV = {
     }
 };
 
+const generateBtn = document.getElementById("generateCV")
+const username = document.getElementById("username").dataset.username,
+    userID = document.getElementById("user-id").dataset.userid
+// Get the form elements
+const pInfoForm = document.getElementById("pinfo") // personal info
+const expInfoForm = document.getElementById("expInfo")
 
+
+
+// Get the template placeholders
+const firstName_tem = document.getElementById("fname_tem"),
+    lastName_tem = document.getElementById("lname_tem"),
+    dob_tem = document.getElementById("dob_tem"),
+    email_tem = document.getElementById("email_tem"),
+    pob_tem = document.getElementById("pob_tem"),
+    phone_tem = document.getElementById("phone_tem"),
+    name_tem = document.getElementById("name_tem"),
+    location_tem = document.getElementById("location_tem"),
+    headline_tem = document.getElementById("headline_tem")
 
 document.addEventListener("DOMContentLoaded", function (e) {
     let globaldata;
@@ -111,23 +129,7 @@ function downloadBtn(btn) {
 }
 
 
-const generateBtn = document.getElementById("generateCV")
-const username = document.getElementById("username").dataset.username,
-    userID = document.getElementById("user-id").dataset.userid
-// Get the form elements
-const pInfoForm = document.getElementById("pinfo")
 
-
-// Get the template placeholders
-const firstName_tem = document.getElementById("fname_tem"),
-    lastName_tem = document.getElementById("lname_tem"),
-    dob_tem = document.getElementById("dob_tem"),
-    email_tem = document.getElementById("email_tem"),
-    pob_tem = document.getElementById("pob_tem"),
-    phone_tem = document.getElementById("phone_tem"),
-    name_tem = document.getElementById("name_tem"),
-    location_tem = document.getElementById("location_tem"),
-    headline_tem = document.getElementById("headline_tem")
 
 // Set the template name to username
 CV["cvName"] = `${username}-${userID}`
@@ -142,6 +144,15 @@ pInfoForm.addEventListener("keyup", function (e) {
     // console.log(personal_data['firstName'])
     updateTemplatePersonalInfo(personal_data, false);
 
+})
+
+// Add event listener to experience form
+expInfoForm.addEventListener("keyup", function (e) {
+    let element = e.target.id
+    let value = e.target.value
+    updateCVData(CV, "Experience", element, value)
+    console.log(CV)
+    updateTemplateExpInfo(CV["Experience"])
 })
 
 function updateCVData(data, form, element, value) {
@@ -176,7 +187,7 @@ function sendCVData(object) {
     console.log(url)
     fetch(`${url}`, options)
         .then(response => response.json())
-        .then(data => console.log(data)) // console.log data sent back by django
+        .then(data => console.log(data)) // Data from Django
         .catch(err => {
             console.log("Something went wrong")
             console.log(err)
@@ -210,3 +221,11 @@ function updatePersonalInfoForm(personal_data, form) {
     form.phone.value = personal_data["phone"]
 }
 
+// Update template data for experience 
+function updateTemplateExpInfo(exp_info) {
+    document.getElementById("exp_title_tem").innerHTML = exp_info["title"]
+    document.getElementById("exp_company_tem").innerHTML = exp_info["company"]
+    document.getElementById("exp_start_tem").innerHTML = exp_info["start"]
+    document.getElementById("exp_end_tem").innerHTML = exp_info["end"]
+    document.getElementById("exp_desc_tem").innerHTML = exp_info["description"]
+}

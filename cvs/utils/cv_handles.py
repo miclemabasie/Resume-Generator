@@ -15,9 +15,9 @@ def create_personalInfo(data, cv):
     email = data["email"]
 
 
-    personal_obj = PersonalInfomation.objects.create(cv=cv, first_name=first_name, last_name=last_name, image=image, summary=summary, dob=dob, pob=pob, location=location, headline=headline, phone=phone, email=email)
+    personal_obj = PersonalInfomation.objects.create(cv=cv, firstName=first_name, lastName=last_name, image=image, summary=summary, dob=dob, pob=pob, location=location, headline=headline, phone=phone, email=email)
     personal_obj.save()
-    return None
+    return True
 
 
 
@@ -25,7 +25,18 @@ def create_education(data):
     print(data)
 
 def create_experience(data, cv):
-    print(data)
+    # get_data 
+    title = data["title"]
+    role = data["role"]
+    company = data["company"]
+    start = data["start"]
+    end = data["end"]
+    description = data["description"]
+
+    exp_obj = Experience.objects.create(cv=cv, title=title, role=role, company=company, start=start, end=end, description=description)
+    exp_obj.save
+    return True
+
 
 def create_skills(data, cv):
     pass

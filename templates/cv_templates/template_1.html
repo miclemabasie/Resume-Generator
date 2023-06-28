@@ -5,7 +5,8 @@
 
 <div class="content">
   <div class="content__left">
-    <h2>Personal Information</h2>
+    <h1>Personal Information</h1>
+    <hr>
     <ul>
       <li><strong>Frist Name: <span id="fname_tem"></span></strong> </li>
       <li><strong>Last Name: <span id="lname_tem"></span></strong> </li>
@@ -15,35 +16,33 @@
       <li><strong>Email: <span id="email_tem"></span></strong></li>
       <li><strong>Phone: <span id="phone_tem"></span></strong> </li>
     </ul>
-{% comment %} 
+    <div class="">
+      <h1>Experience</h1>
+      <hr>
+      <ul>
+        <li class="exp">
+          <h5 id="exp_title_tem">Web Developer</h5>
+          <h5 id="exp_company_tem">ABC Company</h5>
+          <h5><span id="exp_start_tem">June 2012 </span> - <span id="exp_end_tem">present</span></h5>
+          <h5 id=""><strong>Responsibilities: </strong></h5>
+          <p style="font-size: 20px" id="exp_desc_tem">Making shit out of nothing</p>
+        </li>
+      </ul>
+    </div> 
+    
+    {% comment %} 
     <h2>Education</h2>
     <ul>
       <li><strong>Bachelor's Degree in Computer Science</strong></li>
       <li>University of XYZ</li>
       <li>Graduated in May 2012</li>
     </ul>
-
+    
     <h2>Achievements</h2>
     <ul>
       <li>Completed Project A, which resulted in a 30% increase in website traffic</li>
       <li>Received Employee of the Month award in January 2015</li>
     </ul>
   </div>
-
-  <div class="content__right">
-    <h2>Experience</h2>
-    <ul>
-      <li><strong>Web Developer</strong></li>
-      <li>ABC Company</li>
-      <li>June 2012 - Present</li>
-      <li>Responsibilities:</li>
-      <ul>
-        <li>Develop and maintain company websites using HTML, CSS, and JavaScript</li>
-        <li>Collaborate with designers to implement website designs</li>
-        <li>Optimize website performance and user experience</li>
-      </ul>
-
-      <li><strong>Web Designer</strong></li>
-      <li>DEF Agency</li>
-    </ul>
-  </div> {% endcomment %}
+  {% endcomment %}
+</div>
