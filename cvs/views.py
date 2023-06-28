@@ -68,14 +68,15 @@ def create_cv(request, template_id=None):
         user_cv = CV.objects.filter(user=user).last()
     except CV.DoesNotExist:
         user_cv = None
-    
-   
+
     context = {
         "username": user.username,
         "user_id": str(user.id)[-12:],
         "section": "create",
         "template_id": template_id,
     }
+    # if user_cv update the context
+    # to help javascript know if it should request for user data
     if user_cv:
         context["user_cv"] = True
     return render(request, template_name, context)
@@ -87,18 +88,18 @@ def generate_cv(request):
     user = request.user
     profile = Profile.objects.get(user=user)
 
-    
     if request.method == "POST":
         # try to get cv from database
         data = json.loads(request.body)
         # Extract the data coming from the fetch API
         personalinfo = data["PersonalInfo"]
         education_info = data["Education"]
-        experience_info = data["Education"]
-        skills_info = data["Education"]
-        projects_info = data["Education"]
-        achievements_info = data["Education"]
-        language_info = data["Education"]
+        experience_info = data["Experience"]
+        skills_info = data["Skills"]
+        projects_info = data["Projects"]
+        achievements_info = data["Achievements"]
+        language_info = data["Language"]
+        contact_info = data["Contact"]
         # Get the CV associated to the current logged in user
         user_cv = CV.objects.filter(name=data["cvName"]).first()
         print(user_cv)
@@ -113,41 +114,35 @@ def generate_cv(request):
             # update_achieve(achievements_info, user_cv)
             # update_language(language_info, user_cv)
             return JsonResponse({"message": "succesfully updated"})
-
         else:
             print("New instance of cv creation")
             cv = CV.objects.create(user=user, name=data["cvName"])
             create_personalInfo(personalinfo, cv)
-            create_education(education_info, cv)
-            create_experience(experience_info, cv)
-            create_skills(skills_info, cv)
-            create_project(projects_info, cv)
-            create_achieve(achievements_info, cv)
-            create_language(language_info, cv)
+            # create_education(education_info, cv)
+            # create_experience(experience_info, cv)
+            # create_skills(skills_info, cv)
+            # create_project(projects_info, cv)
+            # create_achieve(achievements_info, cv)
+            # create_language(language_info, cv)
             return JsonResponse({"message": "successfully created"})
-
 
 
 @login_required
 def download_pdf(request):
-    template_path = 'pdf_templates/template_1.html'
+    template_path = "pdf_templates/template_1.html"
     user = request.user
     personalInfo = PersonalInfomation.objects.get(cv__user=user)
     context = {"pinfo": personalInfo}
     # Create a Django response object, and specify content_type as pdf
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+    response = HttpResponse(content_type="application/pdf")
+    response["Content-Disposition"] = 'attachment; filename="report.pdf"'
     # find the template and render it.
     template = get_template(template_path)
     html = template.render(context)
     print(personalInfo.headline)
     # create a pdf
-    pisa_status = pisa.CreatePDF(
-       html, dest=response)
+    pisa_status = pisa.CreatePDF(html, dest=response)
     # if error then show some funny view
     if pisa_status.err:
-       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+        return HttpResponse("We had some errors <pre>" + html + "</pre>")
     return response
-       
-        
-   

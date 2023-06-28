@@ -64,33 +64,37 @@ CV = {
     }
 };
 
-let globaldata;
-function getUserCVData() {
-    // Request user data if it already exists in the database
-    const url1 = document.getElementById("url1").dataset.createurl
-    const options = {
-        method: "GET",
-        headers: {
-            "content-type": "application/json",
-        }
-    }
-    fetch(`${url1}?data=data`, options)
-        .then(response => response.json())
-        .then(data => {
-            // console.log(data)
-            globaldata = data;
-            // Update the form field values with data from django
 
-            // update the template with data from django
-            updateTemplatePersonalInfo(data["personal_info"])
-        })
-
-    return false;
-}
 
 document.addEventListener("DOMContentLoaded", function (e) {
+    let globaldata;
+    function getUserCVData() {
+        // Request user data if it already exists in the database
+        const url1 = document.getElementById("url1").dataset.createurl
+        const options = {
+            method: "GET",
+            headers: {
+                "content-type": "application/json",
+            }
+        }
+        fetch(`${url1}?data=data`, options)
+            .then(response => response.json())
+            .then(data => {
+                // console.log(data)
+                CV["PersonalInfo"] = data["personal_info"]
+                console.log(CV)
+                // Update the form field values with data from django
+                updatePersonalInfoForm(data["personal_info"], pInfoForm)
+                // update the template with data from django
+                updateTemplatePersonalInfo(data["personal_info"], true)
+            })
+
+        return false;
+    }
+    // check if CV for user already exists in the database
     if (document.getElementById("usercv")) {
         getUserCVData()
+        console.log(globaldata)
     }
 
 
@@ -102,6 +106,7 @@ const username = document.getElementById("username").dataset.username,
     userID = document.getElementById("user-id").dataset.userid
 // Get the form elements
 const pInfoForm = document.getElementById("pinfo")
+
 
 // Get the template placeholders
 const firstName_tem = document.getElementById("fname_tem"),
@@ -125,19 +130,7 @@ pInfoForm.addEventListener("keyup", function (e) {
     // Send the values from JSON to the template
     personal_data = CV["PersonalInfo"]
     // console.log(personal_data['firstName'])
-
-    // name_tem = personal_data["name"]
-    firstName_tem.innerHTML = personal_data["firstName"]
-    lastName_tem.innerHTML = personal_data["lastName"]
-    dob_tem.innerHTML = personal_data["dob"]
-    email_tem.innerHTML = personal_data["email"]
-    pob_tem.innerHTML = personal_data["pob"]
-    phone_tem.innerHTML = personal_data["phone"]
-    location_tem.innerHTML = personal_data['location']
-    headline_tem.innerHTML = personal_data['headline']
-    name_tem.innerHTML = `${firstName_tem.innerHTML} ${lastName_tem.innerHTML}`
-
-
+    updateTemplatePersonalInfo(personal_data, false);
 
 })
 
@@ -148,7 +141,6 @@ function updateCVData(data, form, element, value) {
 
 function updateTemplate(template_id, cv_json, form) {
     const data = cv[form]
-
     element.innerHTML = data;
 }
 
@@ -174,7 +166,7 @@ function sendCVData(object) {
     console.log(url)
     fetch(`${url}`, options)
         .then(response => response.json())
-        .then(data => console.log(data))
+        .then(data => console.log(data)) // console.log data sent back by django
         .catch(err => {
             console.log("Something went wrong")
             console.log(err)
@@ -183,10 +175,15 @@ function sendCVData(object) {
 }
 
 
-function updateTemplatePersonalInfo(personal_data) {
+function updateTemplatePersonalInfo(personal_data, update) {
+    if (update === true) {
+        firstName_tem.innerHTML = personal_data["first_name"]
+        lastName_tem.innerHTML = personal_data["last_name"]
+    } else {
+        firstName_tem.innerHTML = personal_data["firstName"]
+        lastName_tem.innerHTML = personal_data["lastName"]
+    }
     // name_tem = personal_data["name"]
-    firstName_tem.innerHTML = personal_data["first_name"]
-    lastName_tem.innerHTML = personal_data["last_name"]
     dob_tem.innerHTML = personal_data["dob"]
     email_tem.innerHTML = personal_data["email"]
     pob_tem.innerHTML = personal_data["pob"]
@@ -195,3 +192,16 @@ function updateTemplatePersonalInfo(personal_data) {
     headline_tem.innerHTML = personal_data['headline']
     name_tem.innerHTML = `${firstName_tem.innerHTML} ${lastName_tem.innerHTML}`
 }
+
+// Function to update form fields if data already exists about the user
+function updatePersonalInfoForm(personal_data, form) {
+    form.firstName.value = personal_data["first_name"]
+    form.lastName.value = personal_data["last_name"]
+    form.location.value = personal_data["location"]
+    form.headline.value = personal_data["headline"]
+    form.pob.value = personal_data["pob"]
+    form.dob.value = personal_data["dob"]
+    form.email.value = personal_data["email"]
+    form.phone.value = personal_data["phone"]
+}
+

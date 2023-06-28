@@ -73,7 +73,15 @@ class AchievementInline(admin.TabularInline):
 class PersonalInfomationInline(admin.TabularInline):
     model = PersonalInfomation
     extra = 1  # displays only one extra form
-    fields = ["first_name", "last_name", "summary", "dob", "location", "pob"]
+    fields = [
+        "first_name",
+        "last_name",
+        "headline",
+        "summary",
+        "dob",
+        "location",
+        "pob",
+    ]
     verbose_name_plural = "Personal Information"
     can_delete = False
 

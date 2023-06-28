@@ -24,6 +24,7 @@ SECRET_KEY = env("SECRET_KEY")
 
 ALLOWED_HOSTS = ["localhost"]
 
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # Application definition
 
