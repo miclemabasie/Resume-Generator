@@ -98,13 +98,16 @@ document.addEventListener("DOMContentLoaded", function (e) {
         fetch(`${url1}?data=data`, options)
             .then(response => response.json())
             .then(data => {
-                // console.log(data)
+                console.log(data)
                 CV["PersonalInfo"] = data["personal_info"]
                 console.log(CV)
                 // Update the form field values with data from django
                 updatePersonalInfoForm(data["personal_info"], pInfoForm)
+                updateExpForm(data['experiences'][0], expInfoForm)
+                // console.log()
                 // update the template with data from django
                 updateTemplatePersonalInfo(data["personal_info"], true)
+                updateTemplateExpInfo(data["experiences"][0])
             })
 
         return false;
@@ -228,4 +231,13 @@ function updateTemplateExpInfo(exp_info) {
     document.getElementById("exp_start_tem").innerHTML = exp_info["start"]
     document.getElementById("exp_end_tem").innerHTML = exp_info["end"]
     document.getElementById("exp_desc_tem").innerHTML = exp_info["description"]
+}
+
+// update experience form fields
+function updateExpForm(exp_data, form) {
+    form.title.value = exp_data["title"]
+    form.company.value = exp_data["company"]
+    form.start.value = exp_data["start"]
+    form.end.value = exp_data["end"]
+    form.description.value = exp_data["description"]
 }

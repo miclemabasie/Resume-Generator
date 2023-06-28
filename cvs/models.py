@@ -15,6 +15,13 @@ class CV(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    def get_exp(self):
+        experiences = []
+        for exp in self.experiences.all():
+            experiences.append(exp)
+        
+        return exp
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
