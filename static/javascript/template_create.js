@@ -99,6 +99,8 @@ document.addEventListener("DOMContentLoaded", function (e) {
             .then(response => response.json())
             .then(data => {
                 CV["PersonalInfo"] = data["personal_info"]
+                CV["Experience"] = data["experiences"][0]
+                console.log(CV["Experience"])
                 // Update the form field values with data from django
                 updatePersonalInfoForm(data["personal_info"], pInfoForm)
                 updateExpForm(data['experiences'][0], expInfoForm)
@@ -119,9 +121,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
         getUserCVData()
         downloadBtn(downBtn)
     }
-
-
-
 })
 
 // function to activate download btn
@@ -148,15 +147,21 @@ pInfoForm.addEventListener("keyup", function (e) {
 })
 
 // Add event listener to experience form
-expInfoForm.addEventListener("keyup", function (e) {
-    let element = e.target.id
-    let value = e.target.value
-    updateCVData(CV, "Experience", element, value)
-    updateTemplateExpInfo(CV["Experience"])
-})
+// expInfoForm.addEventListener("keyup", function (e) {
+//     let element = e.target.id
+//     let value = e.target.value
+//     updateCVData(CV, "Experience", element, value)
+//     updateTemplateExpInfo(CV["Experience"])
+// })
 
 function updateCVData(data, form, element, value) {
     data[form][element] = value
+}
+
+// for testing only
+function updateCVData2(data, form, id, element, value) {
+    data[form][id][element] = value
+    console.log(data[form][id].title)
 }
 
 function updateTemplate(template_id, cv_json, form) {
