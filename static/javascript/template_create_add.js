@@ -1,7 +1,7 @@
 
 // Get the parent element
 var parentElement = document.querySelector('.exps');
-
+var expContainer = document.querySelector("#exp-list")
 // Get the button element
 var addButton = document.getElementById('add-exp');
 addButton.addEventListener('click', duplicateForm);
@@ -38,13 +38,17 @@ function duplicateForm() {
 
 
 
-
     // Add click event listener to the minus button
     minusButton.addEventListener('click', function (e) {
+
         e.preventDefault()
         fadeOut(clonedForm, function () {
-            // Remove the cloned form from the DOM after fading out
+
             clonedForm.parentNode.removeChild(clonedForm);
+            compileExtraCVData(expFormList, CV)
+            let formsss = document.querySelectorAll('.expForm')
+            // console.log("formsss", formNodeList)
+            updateTemplateHtml(CV, formsss);
         });
     });
 
@@ -57,7 +61,11 @@ function duplicateForm() {
 
             updateCVData2(CV, "Experience", index, element, value)
             // updateTemplateExpInfo(CV["Experience"][index])
+            // get the nodelist of all exps
         })
+        let formsss = document.querySelectorAll('.expForm')
+        // console.log("formsss", formNodeList)
+        updateTemplateHtml(CV, formsss);
     });
     console.log(CV)
 }
@@ -112,9 +120,10 @@ function compileExtraCVData(formNodeList, globalCV) {
     // list of objects for all the forms
 
     // perform a reset on the cv data
-
+    let formss = document.querySelectorAll('.expForm')
+    console.log("formsss", formNodeList)
     CV["Experience"] = []
-    formNodeList.forEach(form => {
+    formss.forEach(form => {
 
         var exp = {
             title: form.title.value,
@@ -126,10 +135,72 @@ function compileExtraCVData(formNodeList, globalCV) {
         console.log(globalCV)
         CV["Experience"].push(exp)
     });
+    // updateTemplateHtml(CV, formss);
+
 }
 
-// Handle updating CV Data from all forms
-// function UpdateDataForDuplicateForms(formNodeList, cvSection) {
-// loop through the form and add even listeners
+// update experiences in the template
 
-// }
+function updateTemplateHtml(cv, formNodeList) {
+    // Clear the container before updating it's contents
+    const nodeList = document.querySelectorAll('.exp');
+
+    const arrayNodes = [...nodeList];
+    arrayNodes.forEach((node, index) => {
+        // get the max number of
+        if (index !== 0) {
+            node.parentNode.removeChild(node);
+
+        }
+    });
+
+    // console.log(formNodeList[1])
+    console.log()
+    compileExtraCVData(formNodeList, CV)
+    cv["Experience"].forEach((exp, index) => {
+        if (index !== 0) {
+            createExpHTML(cv["Experience"][index], index, cv)
+            updateTemplateExpInfo2(cv["Experience"][index], index)
+            formNodeList[index].addEventListener("keyup", function () {
+                // update template
+                document.getElementById(`exp_title_tem_${index}`).innerHTML = exp["title"]
+                document.getElementById(`exp_company_tem_${index}`).innerHTML = exp["company"]
+                document.getElementById(`exp_start_tem_${index}`).innerHTML = exp["start"]
+                document.getElementById(`exp_end_tem_${index}`).innerHTML = exp["end"]
+                document.getElementById(`exp_desc_tem_${index}`).innerHTML = exp["description"]
+                document.getElementById(`respon_${index}`).innerHTML = "<strong>Responsibilities:</strong>"
+                // document.getElementById(`to`).innerHTML = "-"
+            })
+        }
+    });
+}
+
+function updateTemplateExpInfo2(exp_info, index) {
+    // for testing
+    document.getElementById(`exp_title_tem_${index}`).innerHTML = exp_info["title"]
+    document.getElementById(`exp_company_tem_${index}`).innerHTML = exp_info["company"]
+    document.getElementById(`exp_start_tem_${index}`).innerHTML = exp_info["start"]
+    document.getElementById(`exp_end_tem_${index}`).innerHTML = exp_info["end"]
+    document.getElementById(`exp_desc_tem_${index}`).innerHTML = exp_info["description"]
+    document.getElementById(`respon_${index}`).innerHTML = "<strong>Responsibilities:</strong>"
+}
+
+
+// Create html for the new xp
+// adds new li to the template when plus button is clicked
+function createExpHTML(data, index, formNodeList) {
+    let expHTML = `
+        <h5 id="exp_title_tem_${index}"></h5>
+        <h5 id="exp_company_tem_${index}"></h5>
+        <h5><span id="exp_start_tem_${index}"></span>  <span id="exp_end_tem_${index}"></span></h5>
+        <h5 id="respon_${index}"></h5>
+        <p style="font-size: 20px" id="exp_desc_tem_${index}"></p>
+        <hr>
+        `
+    let li = document.createElement("li")
+    li.classList.add("exp")
+    li.innerHTML = expHTML
+
+    console.log(expContainer)
+    expContainer.appendChild(li)
+}
