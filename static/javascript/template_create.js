@@ -100,14 +100,17 @@ document.addEventListener("DOMContentLoaded", function (e) {
             .then(data => {
                 CV["PersonalInfo"] = data["personal_info"]
                 CV["Experience"] = data["experiences"][0]
-                console.log(CV["Experience"])
                 // Update the form field values with data from django
                 updatePersonalInfoForm(data["personal_info"], pInfoForm)
-                updateExpForm(data['experiences'][0], expInfoForm)
-                // console.log()
-                // update the template with data from django
                 updateTemplatePersonalInfo(data["personal_info"], true)
-                updateTemplateExpInfo(data["experiences"][0])
+                if (data["experiences"].length > 0) {
+                    updateExpForm(data['experiences'][0], expInfoForm)
+                    console.log("there is exp data")
+                    console.log("data from django", data)
+                    // console.log()
+                    // update the template with data from django
+                    updateTemplateExpInfo(data["experiences"][0])
+                }
             })
 
         return false;
@@ -147,12 +150,16 @@ pInfoForm.addEventListener("keyup", function (e) {
 })
 
 // Add event listener to experience form
-// expInfoForm.addEventListener("keyup", function (e) {
-//     let element = e.target.id
-//     let value = e.target.value
-//     updateCVData(CV, "Experience", element, value)
-//     updateTemplateExpInfo(CV["Experience"])
-// })
+expInfoForm.addEventListener("keyup", function (e) {
+    let element = e.target.id
+    let value = e.target.value
+
+    let formsss = document.querySelectorAll('.expForm')
+    compileExtraCVData(formsss, CV)
+    // updateCVData(CV, "Experience", element, value)
+    updateCVData2(CV, "Experience", 0, element, value)
+    updateTemplateExpInfo(CV["Experience"][0])
+})
 
 function updateCVData(data, form, element, value) {
     data[form][element] = value
@@ -162,6 +169,8 @@ function updateCVData(data, form, element, value) {
 function updateCVData2(data, form, id, element, value) {
     data[form][id][element] = value
     console.log(data[form][id].title)
+    // console.log(data[form][id])
+
 }
 
 function updateTemplate(template_id, cv_json, form) {

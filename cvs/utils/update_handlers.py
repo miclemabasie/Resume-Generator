@@ -50,24 +50,48 @@ def update_education(data, user_cv):
     return None
 
 
-def update_experience(data, user_cv):
+def update_experience(data, cv, user):
     # Get Experience obj for this user_cv
-    experience_obj = Experience.objects.filter(cv=user_cv).first()
-    if experience_obj:
-        print("Updating experiences")
-        # Update data
-        experience_obj.title = data["title"]
-        experience_obj.role = data["role"]
-        experience_obj.company = data["company"]
-        if data["start"] != "":
-            experience_obj.start = data["start"]
-        if data["end"] != "":
-            experience_obj.end = data["end"]
-        experience_obj.description = data["description"]
-        experience_obj.save()
-    else:
-        # create a new experience instance incase it does not exist already
-        create_experience(data, user_cv)
+    print("Data from javascrip")
+    experience_obj = Experience.objects.filter(cv__user=user)
+    cleaned_data = clean_data(data)
+
+    # get the len of the two datasets (Database and Javascript)
+    update_data_len = len(cleaned_data)
+    current_data_len = len(experience_obj)
+
+    print(update_data_len, current_data_len)
+
+    # if update_data_len < current_data_len => means user has removed some experiecnes
+    if update_data_len == current_data_len:
+        for i in range(update_data_len):
+            min_update_exp(experience_obj[i], cleaned_data[i])
+    elif update_data_len > current_data_len:
+        print("########################")
+        print("The len of javascript is greated than that of django")
+        for i in range(update_data_len):
+            if i < current_data_len:
+                print("this is i", i, "this is curent lent", current_data_len)
+                print("updatin data insteat")
+                # min_update_exp(experience_obj[i], cleaned_data[i])
+                print("########################")
+            else:
+                print("creating data instead")
+                # print("data for real creating d", cleaned_data[i])
+                min_create_exp(cleaned_data[i], cv)
+                print("#####################")
+
+
+    elif update_data_len < current_data_len:
+        # Some of the experiences have been removed
+        # update the ones left
+        for i in range(current_data_len):
+            print("django >>>>>>>>> js")
+            if i < update_data_len:
+                min_update_exp(experience_obj[i], cleaned_data[i])
+            else:
+                experience_obj[i].delete()
+
     return True
 
 
@@ -125,3 +149,50 @@ def update_contact(data, user_cv):
 
     contact_obj.save()
     return None
+
+
+# function to clean empty fields 
+def clean_data(data):
+    # data.reverse()
+    # print("data inside cleaning function ", data)
+
+    result = []
+    for i in range(len(data)):
+        # print(data[i]["title"]) 
+        # print([data][i]["company"])
+        if(data[i]["title"] == "" and data[i]["company"] == ""):
+            pass
+        else:
+            result.append(data[i])
+    return result
+
+def min_update_exp(exp, data):
+    exp.title = data["title"]
+    exp.company = data["company"]
+    if data["start"] != "":
+        exp.start = data['start']
+    if data["end"] != "":
+        exp.end = data["end"]
+
+    exp.description = data["description"]
+
+    exp.save()
+    # print("updated", exp)
+    return True
+
+def min_create_exp(data, cv):
+    print("data for creating", data)
+    title = data["title"]
+    company = data["company"]
+    if data["start"] != "":
+        start = data['start']
+    if data["end"] != "":
+        end = data["end"]
+    description = data["description"]
+
+    exp = Experience.objects.create(cv=cv, title=title, company=company, start=start, end=end, description=description)
+
+    exp.save()
+    return True
+
+
