@@ -33,7 +33,7 @@ function duplicateForm() {
     // Show the cloned form with a slow animation
     fadeIn(clonedForm);
     // update the CV data with new form
-    CV["Experience"] = []
+    // CV["Experience"] = []
     compileExtraCVData(expFormList, CV)
 
 
@@ -54,6 +54,7 @@ function duplicateForm() {
             let value = e.target.value
             // console.log("element", element)
             // console.log("value", value)
+
             updateCVData2(CV, "Experience", index, element, value)
             // updateTemplateExpInfo(CV["Experience"][index])
         })
@@ -81,6 +82,9 @@ function fadeOut(element, callback) {
         if (opacity <= 0) {
             clearInterval(timer);
             element.style.display = 'none';
+            // CV["Experience"] = []
+            let v = document.querySelectorAll(".expForm")
+            compileExtraCVData(v, CV)
             if (callback) {
                 callback();
             }
@@ -109,7 +113,9 @@ function compileExtraCVData(formNodeList, globalCV) {
 
     // perform a reset on the cv data
 
+    CV["Experience"] = []
     formNodeList.forEach(form => {
+
         var exp = {
             title: form.title.value,
             company: form.company.value,
@@ -118,7 +124,6 @@ function compileExtraCVData(formNodeList, globalCV) {
             description: form.description.value
         }
         console.log(globalCV)
-        // CV["Experience"] = []
         CV["Experience"].push(exp)
     });
 }
