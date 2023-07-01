@@ -65,6 +65,7 @@ function duplicateForm() {
         })
         let formsss = document.querySelectorAll('.expForm')
         // console.log("formsss", formNodeList)
+        compileExtraCVData(formsss, CV)
         updateTemplateHtml(CV, formsss);
     });
     console.log(CV)

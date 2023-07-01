@@ -112,12 +112,14 @@ document.addEventListener("DOMContentLoaded", function (e) {
                             duplicateForm()
                         }
                         let formsss = document.querySelectorAll('.expForm')
-                        updateExpForm(data['experiences'][i], formsss[i])
                         compileExtraCVData(formsss, CV)
-                        updateTemplateExpInfo(data["experiences"][i])
+                        updateExpForm(data['experiences'][i], formsss[i])
                         if (i != 0) {
                             updateTemplateExpInfo2(data["experiences"][i], i)
-                            console.log("data for update", data["experiences"], i)
+                            console.log("data for update", data["experiences"][i], i)
+                            updateTemplateHtml(CV, formsss);
+                        } else {
+                            updateTemplateExpInfo(data["experiences"][i])
                         }
                     }
                     // console.log("there is exp data")
