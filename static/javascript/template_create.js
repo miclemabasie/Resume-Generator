@@ -99,17 +99,31 @@ document.addEventListener("DOMContentLoaded", function (e) {
             .then(response => response.json())
             .then(data => {
                 CV["PersonalInfo"] = data["personal_info"]
-                CV["Experience"] = data["experiences"][0]
+                CV["Experience"] = data["experiences"]
                 // Update the form field values with data from django
                 updatePersonalInfoForm(data["personal_info"], pInfoForm)
                 updateTemplatePersonalInfo(data["personal_info"], true)
                 if (data["experiences"].length > 0) {
-                    updateExpForm(data['experiences'][0], expInfoForm)
-                    console.log("there is exp data")
-                    console.log("data from django", data)
-                    // console.log()
-                    // update the template with data from django
-                    updateTemplateExpInfo(data["experiences"][0])
+                    // find the length of exps for current user
+                    let database_exps_len = data["experiences"].length;
+                    for (let i = 0; i < database_exps_len; i++) {
+                        console.log(i)
+                        if (i != 0) {
+                            duplicateForm()
+                        }
+                        let formsss = document.querySelectorAll('.expForm')
+                        updateExpForm(data['experiences'][i], formsss[i])
+                        compileExtraCVData(formsss, CV)
+                        updateTemplateExpInfo(data["experiences"][i])
+                        if (i != 0) {
+                            updateTemplateExpInfo2(data["experiences"][i], i)
+                            console.log("data for update", data["experiences"], i)
+                        }
+                    }
+                    // console.log("there is exp data")
+                    // console.log("data from django", data)
+                    // // console.log()
+                    // // update the template with data from django
                 }
             })
 
