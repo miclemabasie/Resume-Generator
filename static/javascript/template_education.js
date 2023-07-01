@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Get the add education form buttona
     const addEducationBtn = document.getElementById("add-education")
     addEducationBtn.addEventListener("click", function () {
-        var parentElement = document.querySelector('.educations');
+        let parentElement = document.querySelector('.educations');
         duplicateForm2("educationForm", parentElement)
     })
 })
@@ -190,3 +190,13 @@ educationForm.addEventListener("keyup", function (e) {
     updateCVData2(CV, "Education", 0, element, value)
     updateTemplateEducationInfo(CV["Education"][0])
 })
+
+// update education form fields
+function updateEducationForm(education, form) {
+    form.name.value = education["name"]
+    form.start.value = education["start"]
+    form.end.value = education["end"]
+    form.major.value = education["major"]
+    form.institution.value = education["institution"]
+    form.description.value = education["description"]
+}

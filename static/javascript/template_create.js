@@ -98,8 +98,10 @@ document.addEventListener("DOMContentLoaded", function (e) {
         fetch(`${url1}?data=data`, options)
             .then(response => response.json())
             .then(data => {
+                console.log("data from dajngo", data)
                 CV["PersonalInfo"] = data["personal_info"]
                 CV["Experience"] = data["experiences"]
+                CV["Education"] = data["education"]
                 // Update the form field values with data from django
                 updatePersonalInfoForm(data["personal_info"], pInfoForm)
                 updateTemplatePersonalInfo(data["personal_info"], true)
@@ -119,6 +121,28 @@ document.addEventListener("DOMContentLoaded", function (e) {
                             updateTemplateHtml(CV, formsss);
                         } else {
                             updateTemplateExpInfo(data["experiences"][i])
+                        }
+                    }
+                }
+
+                // Check if education is available in dataset
+                if (data["education"].length > 0) {
+                    // find the length of exps for current user
+                    let database_education_len = data["education"].length;
+                    for (let i = 0; i < database_education_len; i++) {
+                        if (i != 0) {
+                            let parentElement = document.querySelector('.educations');
+                            duplicateForm2("educationForm", parentElement)
+                        }
+                        let formsss = document.querySelectorAll('.educationForm')
+                        compileExtraCVDataEducation(formsss, CV)
+                        updateEducationForm(data['education'][i], formsss[i])
+                        if (i != 0) {
+                            updateTemplateEducationInfoRest(data["education"][i], i)
+                            console.log("this is update from rest")
+                            updateTemplateHtmlEducation(CV, formsss);
+                        } else {
+                            updateTemplateEducationInfo(data["education"][i])
                         }
                     }
                 }
