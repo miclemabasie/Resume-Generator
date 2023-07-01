@@ -69,7 +69,7 @@
         <div class="experience">
             <h2>Experience</h2>
             <div class="exps" id="expFormContainer">
-                <form class="expForm" style="border: 1px solid #ccc; padding: 30px; margin-bottom: 30px"   id="expInfo">
+                <form class="expForm firstForm" style="border: 1px solid #ccc; padding: 30px; margin-bottom: 30px"   id="expInfo">
                     <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="title">Title</label>
@@ -119,8 +119,8 @@
         {% comment %} Experience {% endcomment %}
         <div class="education">
             <h2>Education</h2>
-            <div class="education" id="eductionFormContainer">
-                <form class="educationForm" style="border: 1px solid #ccc; padding: 30px; margin-bottom: 30px"   id="expInfo">
+            <div class="educations" id="eductionFormContainer">
+                <form class="educationForm firstForm" style="border: 1px solid #ccc; padding: 30px; margin-bottom: 30px"   id="eduInfo">
                     <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="name">Name</label>
@@ -162,7 +162,7 @@
                 </div>
                 <div style="display: flex; justify-content: space-between" class="col-md-6 ml-auto">
                     <div></div>
-                    <button data-form="expInfo" id="add-exp" type="button" class="btn btn-success btn-sm">
+                    <button data-form="eduInfo" id="add-education" type="button" class="btn btn-success btn-sm">
                         <i class="fas fa-plus"></i>
                         +
                     </button>
@@ -195,8 +195,10 @@
 
 <script>
     const url = 
-{% block scripts %}
+    {% block scripts %}
+    <script src="{% static "javascript/template_education.js" %}"></script>
     <script src="{% static "javascript/template_create.js" %}"></script>
     <script src="{% static "javascript/template_create_add.js" %}"></script>
+    <script src="{% static "javascript/template_skills.js" %}"></script>
 {% endblock scripts %}
 </script>

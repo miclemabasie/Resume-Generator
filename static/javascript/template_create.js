@@ -20,15 +20,7 @@ CV = {
         name: "",
         level: "",
     },
-    Education: {
-        name: "",
-        major: "",
-        start: "",
-        end: "",
-        institution: "",
-        description: ""
-    },
-    Experience: {
+    Experience: [{
         title: "",
         role: "",
         company: "",
@@ -36,7 +28,15 @@ CV = {
         end: "",
         description: "",
         // achievements: []
-    },
+    }],
+    Education: [{
+        name: "",
+        major: "",
+        start: "",
+        end: "",
+        institution: "",
+        description: ""
+    }],
     Language: {
         // languages: []
         lang_name: "",
@@ -107,7 +107,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
                     // find the length of exps for current user
                     let database_exps_len = data["experiences"].length;
                     for (let i = 0; i < database_exps_len; i++) {
-                        console.log(i)
                         if (i != 0) {
                             duplicateForm()
                         }
@@ -115,17 +114,13 @@ document.addEventListener("DOMContentLoaded", function (e) {
                         compileExtraCVData(formsss, CV)
                         updateExpForm(data['experiences'][i], formsss[i])
                         if (i != 0) {
-                            updateTemplateExpInfo2(data["experiences"][i], i)
-                            console.log("data for update", data["experiences"][i], i)
+                            updateTemplateExpInfoRest(data["experiences"][i], i)
+                            console.log("this is update from rest")
                             updateTemplateHtml(CV, formsss);
                         } else {
                             updateTemplateExpInfo(data["experiences"][i])
                         }
                     }
-                    // console.log("there is exp data")
-                    // console.log("data from django", data)
-                    // // console.log()
-                    // // update the template with data from django
                 }
             })
 
@@ -139,6 +134,8 @@ document.addEventListener("DOMContentLoaded", function (e) {
     if (document.getElementById("usercv")) {
         getUserCVData()
         downloadBtn(downBtn)
+        // addEventToFirstForm("educationForm", "Education")
+        // addEventToFirstForm("exp", "Experience")
     }
 })
 
@@ -164,6 +161,10 @@ pInfoForm.addEventListener("keyup", function (e) {
     updateTemplatePersonalInfo(personal_data, false);
 
 })
+function updateCVData(data, form, element, value) {
+    data[form][element] = value
+}
+
 
 // Add event listener to experience form
 expInfoForm.addEventListener("keyup", function (e) {
@@ -177,21 +178,10 @@ expInfoForm.addEventListener("keyup", function (e) {
     updateTemplateExpInfo(CV["Experience"][0])
 })
 
-function updateCVData(data, form, element, value) {
-    data[form][element] = value
-}
 
 // for testing only
 function updateCVData2(data, form, id, element, value) {
     data[form][id][element] = value
-    console.log(data[form][id].title)
-    // console.log(data[form][id])
-
-}
-
-function updateTemplate(template_id, cv_json, form) {
-    const data = cv[form]
-    element.innerHTML = data;
 }
 
 // Create an event to take handle the cv generation
@@ -215,9 +205,11 @@ function sendCVData(object) {
     }
     fetch(`${url}`, options)
         .then(response => response.json())
-        .then(data => console.log(data)) // Data from Django
+        .then(data => {
+            return 1;
+        }) // Data from Django
         .catch(err => {
-            console.log("Something went wrong")
+            console.log("Something went wrong!")
         })
 
 }
@@ -248,20 +240,32 @@ function updatePersonalInfoForm(personal_data, form) {
     form.phone.value = personal_data["phone"]
 }
 
-// Update template data for experience 
-function updateTemplateExpInfo(exp_info) {
-    document.getElementById("exp_title_tem").innerHTML = exp_info["title"]
-    document.getElementById("exp_company_tem").innerHTML = exp_info["company"]
-    document.getElementById("exp_start_tem").innerHTML = exp_info["start"]
-    document.getElementById("exp_end_tem").innerHTML = exp_info["end"]
-    document.getElementById("exp_desc_tem").innerHTML = exp_info["description"]
-}
+// // Add Eventlistener to all # 1 forms 
 
-// update experience form fields
-function updateExpForm(exp_data, form) {
-    form.title.value = exp_data["title"]
-    form.company.value = exp_data["company"]
-    form.start.value = exp_data["start"]
-    form.end.value = exp_data["end"]
-    form.description.value = exp_data["description"]
-}
+// function addEventToFirstForm(section, cv_section) {
+//     // Get all first forms and loop through
+//     let firstForms = document.querySelectorAll(".firstForm")
+//     // console.log("first forms ", firstForms)
+//     firstForms.forEach(form => {
+//         console.log("running update for first form", form)
+//         form.addEventListener("keyup", function (e) {
+//             let element = e.target.id
+//             let value = e.target.value
+
+//             if (section === "exp" && cv_section === "Experience") {
+//                 console.log("This is exp section", form)
+//                 let expForms = document.querySelectorAll('.expForm')
+//                 compileExtraCVData(expForms, CV)
+//                 // updateCVData(CV, "Experience", element, value)
+//                 updateCVData2(CV, cv_section, 0, element, value)
+//                 updateTemplateExpInfo(CV["Experience"][0])
+//             } else {
+//                 let restForms = document.querySelectorAll(section)
+//                 compileExtraCVDataEducation(restForms, CV)
+//                 updateCVData2(CV, cv_section, 0, element, value)
+//                 updateTemplateEducationInfo(CV["Education"][0])
+//             }
+//         })
+//     });
+
+// }

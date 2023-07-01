@@ -68,7 +68,7 @@ function duplicateForm() {
         compileExtraCVData(formsss, CV)
         updateTemplateHtml(CV, formsss);
     });
-    console.log(CV)
+
 }
 
 function fadeIn(element) {
@@ -122,7 +122,6 @@ function compileExtraCVData(formNodeList, globalCV) {
 
     // perform a reset on the cv data
     let formss = document.querySelectorAll('.expForm')
-    console.log("formsss", formNodeList)
     CV["Experience"] = []
     formss.forEach(form => {
 
@@ -133,7 +132,6 @@ function compileExtraCVData(formNodeList, globalCV) {
             end: form.end.value,
             description: form.description.value
         }
-        console.log(globalCV)
         CV["Experience"].push(exp)
     });
     // updateTemplateHtml(CV, formss);
@@ -156,12 +154,11 @@ function updateTemplateHtml(cv, formNodeList) {
     });
 
     // console.log(formNodeList[1])
-    console.log()
     compileExtraCVData(formNodeList, CV)
     cv["Experience"].forEach((exp, index) => {
         if (index !== 0) {
             createExpHTML(cv["Experience"][index], index, cv)
-            updateTemplateExpInfo2(cv["Experience"][index], index)
+            updateTemplateExpInfoRest(cv["Experience"][index], index)
             formNodeList[index].addEventListener("keyup", function () {
                 // update template
                 document.getElementById(`exp_title_tem_${index}`).innerHTML = exp["title"]
@@ -176,14 +173,33 @@ function updateTemplateHtml(cv, formNodeList) {
     });
 }
 
-function updateTemplateExpInfo2(exp_info, index) {
-    // for testing
+// Update template data for experience 
+function updateTemplateExpInfo(exp_info) {
+    document.getElementById("exp_title_tem").innerHTML = exp_info["title"]
+    document.getElementById("exp_company_tem").innerHTML = exp_info["company"]
+    document.getElementById("exp_start_tem").innerHTML = exp_info["start"]
+    document.getElementById("exp_end_tem").innerHTML = exp_info["end"]
+    document.getElementById("exp_desc_tem").innerHTML = exp_info["description"]
+}
+
+
+// update all other exps on the template except the first one
+function updateTemplateExpInfoRest(exp_info, index) {
     document.getElementById(`exp_title_tem_${index}`).innerHTML = exp_info["title"]
     document.getElementById(`exp_company_tem_${index}`).innerHTML = exp_info["company"]
     document.getElementById(`exp_start_tem_${index}`).innerHTML = exp_info["start"]
     document.getElementById(`exp_end_tem_${index}`).innerHTML = exp_info["end"]
     document.getElementById(`exp_desc_tem_${index}`).innerHTML = exp_info["description"]
     document.getElementById(`respon_${index}`).innerHTML = "<strong>Responsibilities:</strong>"
+}
+
+// update experience form fields
+function updateExpForm(exp_data, form) {
+    form.title.value = exp_data["title"]
+    form.company.value = exp_data["company"]
+    form.start.value = exp_data["start"]
+    form.end.value = exp_data["end"]
+    form.description.value = exp_data["description"]
 }
 
 
@@ -201,7 +217,8 @@ function createExpHTML(data, index, formNodeList) {
     let li = document.createElement("li")
     li.classList.add("exp")
     li.innerHTML = expHTML
-
-    console.log(expContainer)
+    // Add the new li to the list of experieces
     expContainer.appendChild(li)
 }
+
+
