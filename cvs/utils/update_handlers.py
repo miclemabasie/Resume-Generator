@@ -33,28 +33,72 @@ def update_personalInfo(data, user_cv):
     return None
 
 
-def update_education(data, user_cv):
-    # Get the education models related to this CV
-    education_obj = Education.objects.filter(cv=user_cv).first()
-    # udate individual data of this instance
-    education_obj.name = data["name"]
-    education_obj.major = data["major"]
-    education_obj.description = data["description"]
-    if data["start"] != "":
-        education_obj.start = data["start"]
-    if data["end"] != "":
-        education_obj.end = data["end"]
-    education_obj.institution = data["institution"]
+def update_education(data, cv, user):
 
-    education_obj.save()
-    return None
+    if 1:
+        # # Get the education models related to this CV
+        # education_obj = Education.objects.filter(cv=user_cv).first()
+        # # udate individual data of this instance
+        # education_obj.name = data["name"]
+        # education_obj.major = data["major"]
+        # education_obj.description = data["description"]
+        # if data["start"] != "":
+        #     education_obj.start = data["start"]
+        # if data["end"] != "":
+        #     education_obj.end = data["end"]
+        # education_obj.institution = data["institution"]
+
+        # education_obj.save()
+        pass
+    
+    # Get Experience obj for this user_cv
+    print("Data from javascrip", data)
+    education_obj = Education.objects.filter(cv__user=user)
+    cleaned_data = clean_data_education(data)
+
+    # get the len of the two datasets (Database and Javascript)
+    update_data_len = len(cleaned_data)
+    current_data_len = len(education_obj)
+
+    print(update_data_len, current_data_len)
+
+    # if update_data_len < current_data_len => means user has removed some experiecnes
+    if update_data_len == current_data_len:
+        for i in range(update_data_len):
+            min_update_education(education_obj[i], cleaned_data[i])
+
+    elif update_data_len > current_data_len:
+        print("########################")
+        print("The len of javascript is greated than that of django")
+        for i in range(update_data_len):
+            if i < current_data_len:
+                print("this is i", i, "this is curent lent", current_data_len)
+                print("updatin data insteat")
+                min_update_education(education_obj[i], cleaned_data[i])
+                print("########################")
+            else:
+                print("creating data instead")
+                print("data for real creating at i", i)
+                min_create_education(cleaned_data[i], cv)
+        print("#####################")
+    elif update_data_len < current_data_len:
+        # Some of the experiences have been removed
+        # update the ones left
+        for i in range(current_data_len):
+            print("django >>>>>>>>> js")
+            if i < update_data_len:
+                min_update_education(education_obj[i], cleaned_data[i])
+            else:
+                education_obj[i].delete()
+
+    return True
 
 
 def update_experience(data, cv, user):
     # Get Experience obj for this user_cv
     print("Data from javascrip")
     experience_obj = Experience.objects.filter(cv__user=user)
-    cleaned_data = clean_data(data)
+    cleaned_data = clean_data_exps(data)
 
     # get the len of the two datasets (Database and Javascript)
     update_data_len = len(cleaned_data)
@@ -73,11 +117,10 @@ def update_experience(data, cv, user):
             if i < current_data_len:
                 print("this is i", i, "this is curent lent", current_data_len)
                 print("updatin data insteat")
-                # min_update_exp(experience_obj[i], cleaned_data[i])
+                min_update_exp(experience_obj[i], cleaned_data[i])
                 print("########################")
             else:
                 print("creating data instead")
-                # print("data for real creating d", cleaned_data[i])
                 min_create_exp(cleaned_data[i], cv)
                 print("#####################")
 
@@ -152,7 +195,7 @@ def update_contact(data, user_cv):
 
 
 # function to clean empty fields 
-def clean_data(data):
+def clean_data_exps(data):
     # data.reverse()
     # print("data inside cleaning function ", data)
 
@@ -196,3 +239,45 @@ def min_create_exp(data, cv):
     return True
 
 
+def clean_data_education(data):
+
+    result = []
+    for i in range(len(data)):
+        # print(data[i]["title"]) 
+        # print([data][i]["company"])
+        if(data[i]["name"] == "" and data[i]["major"] == ""):
+            pass
+        else:
+            result.append(data[i])
+    return result
+
+
+def min_update_education(education, data):
+    education.name = data["name"]
+    education.major = data["major"]
+    if data["start"] != "":
+        education.start = data['start']
+    if data["end"] != "":
+        education.end = data["end"]
+    education.institution = data["institution"]
+    education.description = data["description"]
+
+    education.save()
+    # print("updated",  education)
+    return True
+
+def min_create_education(data, cv):
+    print("data for creating", data)
+    name = data["name"]
+    major = data["major"]
+    if data["start"] != "":
+        start = data['start']
+    if data["end"] != "":
+        end = data["end"]
+    institution = data["institution"]
+    description = data["description"]
+
+    education = Education.objects.create(cv=cv, name=name, major=major, start=start, end=end, institution=institution, description=description)
+
+    education.save()
+    return True

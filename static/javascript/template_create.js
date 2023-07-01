@@ -206,7 +206,7 @@ function sendCVData(object) {
     fetch(`${url}`, options)
         .then(response => response.json())
         .then(data => {
-            return 1;
+            console.log(data)
         }) // Data from Django
         .catch(err => {
             console.log("Something went wrong!")

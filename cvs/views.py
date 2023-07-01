@@ -106,11 +106,11 @@ def generate_cv(request):
         print(user_cv)
         if user_cv:
             print("There is a CV for this user, we need updates only")
-            print(experience_info)
+            print(education_info)
             # Run update routine functions
             # update_personalInfo(personalinfo, user_cv)
-            # update_education(education_info, user_cv)
-            update_experience(experience_info, user_cv, user)
+            update_education(education_info, user_cv, user)
+            # update_experience(experience_info, user_cv, user)
             # update_skills(skills_info, user_cv)
             # update_project(projects_info, user_cv)
             # update_achieve(achievements_info, user_cv)
