@@ -68,19 +68,12 @@ def update_education(data, cv, user):
             min_update_education(education_obj[i], cleaned_data[i])
 
     elif update_data_len > current_data_len:
-        print("########################")
         print("The len of javascript is greated than that of django")
         for i in range(update_data_len):
             if i < current_data_len:
-                print("this is i", i, "this is curent lent", current_data_len)
-                print("updatin data insteat")
                 min_update_education(education_obj[i], cleaned_data[i])
-                print("########################")
             else:
-                print("creating data instead")
-                print("data for real creating at i", i)
                 min_create_education(cleaned_data[i], cv)
-        print("#####################")
     elif update_data_len < current_data_len:
         # Some of the experiences have been removed
         # update the ones left

@@ -116,7 +116,7 @@
         </div>
         {% comment %} end of Experience {% endcomment %}
         <hr>
-        {% comment %} Experience {% endcomment %}
+        {% comment %} Education {% endcomment %}
         <div class="education">
             <h2>Education</h2>
             <div class="educations" id="eductionFormContainer">
@@ -169,8 +169,122 @@
                 </div>
             </div>
         </div>
-        {% comment %} end of Experience {% endcomment %}
+        {% comment %} end of Education {% endcomment %}
         <hr>
+
+         {% comment %} achievement {% endcomment %}
+         <div class="achievementss">
+            <h2>Achievement</h2>
+            <div class="achievements" id="achievementFormContainer">
+                <form class="achievementForm firstForm" style="border: 1px solid #ccc; padding: 30px; margin-bottom: 30px"   id="eduInfo">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" name="name">
+                        </div>
+                        <div class="col-md-5 mb-3">
+                            <label for="date">Date</label>
+                            <input type="date" class="form-control" id="date" name="date">
+                        </div>
+                    </div>
+                    <div class="row">    
+                        <div class="col-md-6 mb-3">
+                            <label for="organization">Organization</label>
+                            <input class="form-control" id="organization" name="organization">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="link">link</label>
+                            <input class="form-control" id="link" name="link">
+                        </div>
+                    </div>        
+                    <div class="row"> 
+                        <div class="col-md-12 mb-3">
+                            <label for="description">Description</label>
+                            <input class="form-control" id="description" name="description">
+                        </div>
+                    </div>     
+                </form>
+            </div>
+            <div class="row pt-2">
+                <div class="col-md-6">
+                </div>
+                <div style="display: flex; justify-content: space-between" class="col-md-6 ml-auto">
+                    <div></div>
+                    <button data-form="eduInfo" id="add-achievement" type="button" class="btn btn-success btn-sm">
+                        <i class="fas fa-plus"></i>
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% comment %} end of achievement {% endcomment %}
+        <hr>
+
+        {% comment %} Skils {% endcomment %}
+        <div class="skillsss">
+            <h2>Skills</h2>
+            <div class="skills" id="skillFormContainer">
+                <form class="skillForm firstForm" style="border: 1px solid #ccc; padding: 30px; margin-bottom: 30px"   id="eduInfo">
+                    <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" name="name">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="level">Level</label>
+                        <input type="number" class="form-control" id="level" name="level">
+                    </div>
+                    </div>            
+                </form>
+            </div>
+            <div class="row pt-2">
+                <div class="col-md-6">
+                </div>
+                <div style="display: flex; justify-content: space-between" class="col-md-6 ml-auto">
+                    <div></div>
+                    <button data-form="eduInfo" id="add-skill" type="button" class="btn btn-success btn-sm">
+                        <i class="fas fa-plus"></i>
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% comment %} end of skill {% endcomment %}
+        <hr>
+
+        {% comment %} languages {% endcomment %}
+        <div class="languagesss">
+            <h2>Languages</h2>
+            <div class="languages" id="languageFormContainer">
+                <form class="languageForm firstForm" style="border: 1px solid #ccc; padding: 30px; margin-bottom: 30px"   id="eduInfo">
+                    <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" name="name">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="level">Level</label>
+                        <input type="number" class="form-control" id="level" name="level">
+                    </div>
+                    </div>            
+                </form>
+            </div>
+            <div class="row pt-2">
+                <div class="col-md-6">
+                </div>
+                <div style="display: flex; justify-content: space-between" class="col-md-6 ml-auto">
+                    <div></div>
+                    <button data-form="eduInfo" id="add-language" type="button" class="btn btn-success btn-sm">
+                        <i class="fas fa-plus"></i>
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% comment %} end of language {% endcomment %}
+        <hr>
+       
+
         
     </div>
     <div class="split right">

@@ -16,8 +16,6 @@ function duplicateForm2(section, parentElement) {
     var clonedForm = document.querySelector(`.${section}`).cloneNode(true);
     // empty fields
     emptyFormFields(clonedForm)
-    console.log("from education form")
-    // console.log(clonedForm)
 
     // Add a minus button to the cloned form
     var minusButton = document.createElement('button');
@@ -34,7 +32,6 @@ function duplicateForm2(section, parentElement) {
     parentElement.appendChild(clonedForm);
 
     const sectionFormList = document.querySelectorAll(`.${section}`)
-    console.log(sectionFormList)
 
     // Show the cloned form with a slow animation
     fadeIn(clonedForm);
@@ -51,16 +48,15 @@ function duplicateForm2(section, parentElement) {
             clonedForm.parentNode.removeChild(clonedForm);
             compileExtraCVDataEducation(sectionFormList, CV)
             let formsss = document.querySelectorAll(`.${section}`)
-
+            // console.log("formsss", formNodeList)
+            updateTemplateHtmlEducation(CV, formsss);
         });
     });
 
-    console.log("section: ", section)
     if (section === "skillForm") {
         const sectionCVID = "Skills"
     } else if (section === "educationForm") {
         const sectionCVID = "Education"
-        console.log("section id:", sectionCVID)
         sectionFormList.forEach((form, index) => {
             form.addEventListener("keyup", function (e) {
                 let element = e.target.id
@@ -70,12 +66,10 @@ function duplicateForm2(section, parentElement) {
                 // get the nodelist of all exps
             })
             let formsss = document.querySelectorAll(`.${section}`)
-            console.log("formsss", formsss)
             compileExtraCVDataEducation(formsss, CV)
             updateTemplateHtmlEducation(CV, formsss);
         });
     }
-    console.log(CV)
 }
 
 function compileExtraCVDataEducation(formNodeList, globalCV) {
@@ -84,7 +78,6 @@ function compileExtraCVDataEducation(formNodeList, globalCV) {
 
     // perform a reset on the cv data
     let formss = document.querySelectorAll(".educationForm")
-    console.log(formss)
     CV["Education"] = []
     formss.forEach(form => {
 
@@ -96,9 +89,7 @@ function compileExtraCVDataEducation(formNodeList, globalCV) {
             institution: form.institution.value,
             description: form.description.value
         }
-        // console.log(CV["Experience"])
         CV["Education"].push(education)
-        console.log(CV["Education"])
 
     });
     // updateTemplateHtmlEducation(CV, formss);
@@ -118,7 +109,6 @@ function updateTemplateHtmlEducation(cv, formNodeList) {
         }
     });
 
-    // console.log(formNodeList[1])
     compileExtraCVDataEducation(formNodeList, cv)
     cv["Education"].forEach((education, index) => {
         if (index !== 0) {

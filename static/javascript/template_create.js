@@ -14,12 +14,12 @@ CV = {
         email: "",
         summary: "",
     },
-    Skills: {
+    Skills: [{
         // technical: [],
         // soft: []
         name: "",
         level: "",
-    },
+    }],
     Experience: [{
         title: "",
         role: "",
@@ -48,20 +48,13 @@ CV = {
         website: "",
         other: []
     },
-    Projects: {
-        // date: "",
-        // technologies: [],
-        name: "",
-        description: "",
-        link: ""
-    },
-    Achievements: {
+    Achievements: [{
         name: "",
         date: "",
         description: "",
         organization: "",
         link: ""
-    }
+    }]
 };
 
 const generateBtn = document.getElementById("generateCV")
@@ -101,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
                 console.log("data from dajngo", data)
                 CV["PersonalInfo"] = data["personal_info"]
                 CV["Experience"] = data["experiences"]
-                CV["Education"] = data["education"]
+                // CV["Education"] = data["education"]
                 // Update the form field values with data from django
                 updatePersonalInfoForm(data["personal_info"], pInfoForm)
                 updateTemplatePersonalInfo(data["personal_info"], true)
@@ -127,6 +120,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
                 // Check if education is available in dataset
                 if (data["education"].length > 0) {
+                    CV["Education"] = data["education"]
                     // find the length of exps for current user
                     let database_education_len = data["education"].length;
                     for (let i = 0; i < database_education_len; i++) {
@@ -139,7 +133,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
                         updateEducationForm(data['education'][i], formsss[i])
                         if (i != 0) {
                             updateTemplateEducationInfoRest(data["education"][i], i)
-                            console.log("this is update from rest")
                             updateTemplateHtmlEducation(CV, formsss);
                         } else {
                             updateTemplateEducationInfo(data["education"][i])
@@ -175,13 +168,10 @@ function downloadBtn(btn) {
 CV["cvName"] = `${username}-${userID}`
 
 pInfoForm.addEventListener("keyup", function (e) {
-    // console.log(e.target.id)
     let element = e.target.id
     let value = e.target.value
     updateCVData(CV, "PersonalInfo", element, value)
     // Send the values from JSON to the template
-    personal_data = CV["PersonalInfo"]
-    // console.log(personal_data['firstName'])
     updateTemplatePersonalInfo(personal_data, false);
 
 })

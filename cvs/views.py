@@ -110,7 +110,7 @@ def generate_cv(request):
             # Run update routine functions
             # update_personalInfo(personalinfo, user_cv)
             update_education(education_info, user_cv, user)
-            # update_experience(experience_info, user_cv, user)
+            update_experience(experience_info, user_cv, user)
             # update_skills(skills_info, user_cv)
             # update_project(projects_info, user_cv)
             # update_achieve(achievements_info, user_cv)
@@ -137,7 +137,7 @@ def download_pdf(request):
     template_path = "pdf_templates/template_1.html"
     user = request.user
     personalInfo = PersonalInfomation.objects.get(cv__user=user)
-    experienceInfo = Experience.objects.get(cv__user=user)
+    experienceInfo = Experience.objects.filter(cv__user=user).first()
     pdf_data = {"pinfo": personalInfo, "expinfo": experienceInfo}
     context = {"data": pdf_data}
     cv_name = f"{user.username}-cv"
