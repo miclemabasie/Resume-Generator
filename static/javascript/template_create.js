@@ -37,11 +37,11 @@ CV = {
         institution: "",
         description: ""
     }],
-    Language: {
+    Languages: [{
         // languages: []
         lang_name: "",
         level: "",
-    },
+    }],
     Contact: {
         linkedin: "",
         github: "",
