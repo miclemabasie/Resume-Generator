@@ -114,21 +114,87 @@ def update_experience(data, cv, user):
     return True
 
 
-def update_skills(data, user_cv):
-    # Get the skill_ob for this cv obj
-    skill_obj = Skill.objects.get(cv=user_cv)
-    # udate data for skill_obj
-    skill_obj.name = data["name"]
-    skill_obj.level = int(data["level"])
+def update_skills(data, cv, user):
+    # Get Skill obj for this user_cv
+    print("Data from javascrip", data)
+    skill_obj = Skill.objects.filter(cv__user=user)
+    cleaned_data = clean_data_skill(data)
+
+    if cleaned_data:
+        print("valid skill data", data)
+        # get the len of the two datasets (Database and Javascript)
+        update_data_len = len(cleaned_data)
+        current_data_len = len(skill_obj)
+
+        print(update_data_len, current_data_len)
+
+        # if update_data_len < current_data_len => means user has removed some achievements
+        if update_data_len == current_data_len:
+            for i in range(update_data_len):
+                min_update_skill(skill_obj[i], cleaned_data[i])
+
+        elif update_data_len > current_data_len:
+            print("The len of javascript is greated than that of django")
+            for i in range(update_data_len):
+                if i < current_data_len:
+                    min_update_skill(skill_obj[i], cleaned_data[i])
+                else:
+                    min_create_skill(cleaned_data[i], cv)
+        elif update_data_len < current_data_len:
+            # Some of the achievements have been removed
+            # update the ones left
+            for i in range(current_data_len):
+                print("django >>>>>>>>> js")
+                if i < update_data_len:
+                    min_update_skill(skill_obj[i], cleaned_data[i])
+                else:
+                    skill_obj[i].delete()
+        return True 
+    else:
+        print("No valid data was found on the page")
+        return None  
 
 
-def update_language(data, user_cv):
-    # get Language object for this user CV
-    language_obj = Language.objects.get(cv=user_cv)
-    # udate language obj data
-    language_obj.lang_name = data["lang_name"]
-    language_obj.level = data["level"]
 
+def update_language(data, cv, user):
+    # Get Language obj for this user_cv
+    print("Data from javascrip", data)
+    language_obj = Language.objects.filter(cv__user=user)
+    cleaned_data = clean_data_language(data)
+
+    if cleaned_data:
+        print("valid lang data", data)
+        # get the len of the two datasets (Database and Javascript)
+        update_data_len = len(cleaned_data)
+        current_data_len = len(language_obj)
+
+        print(update_data_len, current_data_len)
+
+        # if update_data_len < current_data_len => means user has removed some achievements
+        if update_data_len == current_data_len:
+            for i in range(update_data_len):
+                min_update_language(language_obj[i], cleaned_data[i])
+
+        elif update_data_len > current_data_len:
+            print("The len of javascript is greated than that of django")
+            for i in range(update_data_len):
+                if i < current_data_len:
+                    min_update_language(language_obj[i], cleaned_data[i])
+                else:
+                    min_create_language(cleaned_data[i], cv)
+        elif update_data_len < current_data_len:
+            # Some of the achievements have been removed
+            # update the ones left
+            for i in range(current_data_len):
+                print("django >>>>>>>>> js")
+                if i < update_data_len:
+                    min_update_language(language_obj[i], cleaned_data[i])
+                else:
+                    language_obj[i].delete()
+        return True 
+    else:
+        print("No valid data was found on the page")
+        return None  
 
 def update_project(data, user_cv):
     # get project obj for this user CV

@@ -97,7 +97,7 @@ class Skill(models.Model):
 
 class Language(models.Model):
     cv = models.ForeignKey(CV, related_name="languages", on_delete=models.CASCADE)
-    lang_name = models.CharField(verbose_name=_("Language"), max_length=100)
+    name = models.CharField(verbose_name=_("Language"), max_length=100)
     level = models.IntegerField(
         validators=[MinValueValidator(0), MaxValueValidator(100)], default=0
     )

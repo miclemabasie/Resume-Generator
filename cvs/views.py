@@ -112,9 +112,9 @@ def generate_cv(request):
             update_education(education_info, user_cv, user)
             update_experience(experience_info, user_cv, user)
             update_achieve(achievements_info, user_cv, user)
-            # update_skills(skills_info, user_cv)
+            update_skills(skills_info, user_cv, user)
             # update_project(projects_info, user_cv)
-            # update_language(language_info, user_cv)
+            update_language(language_info, user_cv, user)
             return JsonResponse({"message": "succesfully updated"})
             # return HttpResponseRedirect("/download-cv/")
 

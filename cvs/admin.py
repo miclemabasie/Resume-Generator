@@ -41,7 +41,7 @@ class SkillInline(admin.TabularInline):
 class LanguageInline(admin.TabularInline):
     model = Language
     extra = 2  # displays only one extra form
-    fields = ["lang_name", "level"]
+    fields = ["name", "level"]
     verbose_name_plural = "Languages"
     can_delete = False
 

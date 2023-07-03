@@ -137,3 +137,69 @@ def min_create_achievement(data, cv):
 
     achievement.save()
     return True
+
+# Languages
+def clean_data_language(data):
+    result = []
+    for i in range(len(data)):
+        if(data[i]["name"] == ""):
+            pass
+        else:
+            result.append(data[i])
+    if len(result) > 0:
+        return result
+    else: 
+        return None
+
+
+def min_update_language(language, data):
+    language.name = data["name"]
+    language.level = data["level"]
+    
+
+    language.save()
+    # print("updated",  education)
+    return True
+
+def min_create_language(data, cv):
+    print("data for creating", data)
+    name = data["name"]
+    level = data["level"]
+   
+    language = Language.objects.create(cv=cv, name=name, level=level)
+
+    language.save()
+    return True
+
+# Skill
+def clean_data_skill(data):
+    result = []
+    for i in range(len(data)):
+        if(data[i]["name"] == ""):
+            pass
+        else:
+            result.append(data[i])
+    if len(result) > 0:
+        return result
+    else: 
+        return None
+
+
+def min_update_skill(skill, data):
+    skill.name = data["name"]
+    skill.level = data["level"]
+    
+
+    skill.save()
+    # print("updated",  education)
+    return True
+
+def min_create_skill(data, cv):
+    print("data for creating", data)
+    name = data["name"]
+    level = data["level"]
+   
+    skill = Skill.objects.create(cv=cv, name=name, level=level)
+
+    skill.save()
+    return True
