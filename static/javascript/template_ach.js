@@ -4,13 +4,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const addAchievement = document.getElementById("add-achievement")
     addAchievement.addEventListener("click", function () {
         let parentElement = document.querySelector('.achievements');
-        duplicateFormLanguage("achievementForm", parentElement)
+        duplicateFormAchievement("achievementForm", parentElement)
     })
 })
 
 const achievmentContainter = document.querySelector(".achievement-list-tem")
 
-function duplicateFormLanguage(section, parentElement) {
+function duplicateFormAchievement(section, parentElement) {
 
     // Create a clone of the form
     var clonedForm = document.querySelector(`.${section}`).cloneNode(true);
@@ -77,14 +77,14 @@ function compileExtraCVDataAchievement(formNodeList, globalCV) {
     CV["Achievements"] = []
     formss.forEach(form => {
 
-        var language = {
+        var ach = {
             name: form.name.value,
             date: form.date.value,
             organization: form.organization.value,
             link: form.link.value,
             description: form.description.value,
         }
-        CV["Achievements"].push(language)
+        CV["Achievements"].push(ach)
 
     });
     // updateTemplateHtmlAchievement(CV, formss);
@@ -140,7 +140,7 @@ function createAchievementHTML(data, index, formNodeList) {
 }
 
 // Update template data for experience 
-function updateTemplateLanaguageInfo(ach) {
+function updateTemplateAchievementInfo(ach) {
     document.getElementById("ach_name_tem").innerHTML = ach["name"]
     document.getElementById("ach_date_tem").innerHTML = ach["date"]
     document.getElementById("ach_organization_tem").innerHTML = ach["organization"]
@@ -149,7 +149,7 @@ function updateTemplateLanaguageInfo(ach) {
 }
 
 
-// update all other languages on the template except the first one
+// update all other achievements on the template except the first one
 function updateTemplateAchievementRest(ach, index) {
     document.getElementById(`ach_name_tem_${index}`).innerHTML = ach["name"]
     document.getElementById(`ach_date_tem_${index}`).innerHTML = ach["date"]
@@ -163,7 +163,7 @@ function updateTemplateAchievementRest(ach, index) {
 const achForms = document.querySelectorAll(".achievementForm")
 let achForm = achForms[0]
 
-// Add event to first language form on the page
+// Add event to first achievement form on the page
 achForm.addEventListener("keyup", function (e) {
     let element = e.target.id
     let value = e.target.value
@@ -172,14 +172,14 @@ achForm.addEventListener("keyup", function (e) {
     compileExtraCVData(formsss, CV)
     // updateCVData(CV, "Experience", element, value)
     updateCVData2(CV, "Achievements", 0, element, value)
-    updateTemplateLanaguageInfo(CV["Achievements"][0])
+    updateTemplateAchievementInfo(CV["Achievements"][0])
 })
 
 // update education form fields
-function updateachievementForm(lang, form) {
-    form.name.value = lang["name"]
-    form.date.value = lang["date"]
-    form.organization.value = lang["organization"]
-    form.link.value = lang["link"]
-    form.description.value = lang["description"]
+function updateachievementForm(ach, form) {
+    form.name.value = ach["name"]
+    form.date.value = ach["date"]
+    form.organization.value = ach["organization"]
+    form.link.value = ach["link"]
+    form.description.value = ach["description"]
 }

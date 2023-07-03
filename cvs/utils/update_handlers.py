@@ -11,7 +11,7 @@ from ..models import (
     Project,
 )
 from cvs.utils.cv_handles import *
-
+from . mini_update_handlers import *
 
 
 def update_personalInfo(data, user_cv):
@@ -33,24 +33,7 @@ def update_personalInfo(data, user_cv):
     return None
 
 
-def update_education(data, cv, user):
-
-    if 1:
-        # # Get the education models related to this CV
-        # education_obj = Education.objects.filter(cv=user_cv).first()
-        # # udate individual data of this instance
-        # education_obj.name = data["name"]
-        # education_obj.major = data["major"]
-        # education_obj.description = data["description"]
-        # if data["start"] != "":
-        #     education_obj.start = data["start"]
-        # if data["end"] != "":
-        #     education_obj.end = data["end"]
-        # education_obj.institution = data["institution"]
-
-        # education_obj.save()
-        pass
-    
+def update_education(data, cv, user):    
     # Get Experience obj for this user_cv
     print("Data from javascrip", data)
     education_obj = Education.objects.filter(cv__user=user)
@@ -159,19 +142,45 @@ def update_project(data, user_cv):
     return None
 
 
-def update_achieve(data, user_cv):
-    # Get ach for this user_cv
-    ach_obj = Achievement.objects.get(cv=user_cv)
-    # Update data for arc_obj
-    ach_obj.name = data["name"]
-    if data["date"] != "":
-        ach_obj.date = data["date"]
-    ach_obj.description = data["description"]
-    ach_obj.organization = data["organization"]
-    ach_obj.link = data["link"]
+def update_achieve(data, cv, user):
+   # Get Experience obj for this user_cv
+    print("Data from javascrip", data)
+    achievement_obj = Achievement.objects.filter(cv__user=user)
+    cleaned_data = clean_data_achievement(data)
 
-    ach_obj.save()
-    return None
+    if cleaned_data:
+        print("valid ach data", data)
+        # get the len of the two datasets (Database and Javascript)
+        update_data_len = len(cleaned_data)
+        current_data_len = len(achievement_obj)
+
+        print(update_data_len, current_data_len)
+
+        # if update_data_len < current_data_len => means user has removed some achievements
+        if update_data_len == current_data_len:
+            for i in range(update_data_len):
+                min_update_achievement(achievement_obj[i], cleaned_data[i])
+
+        elif update_data_len > current_data_len:
+            print("The len of javascript is greated than that of django")
+            for i in range(update_data_len):
+                if i < current_data_len:
+                    min_update_achievement(achievement_obj[i], cleaned_data[i])
+                else:
+                    min_create_achievement(cleaned_data[i], cv)
+        elif update_data_len < current_data_len:
+            # Some of the achievements have been removed
+            # update the ones left
+            for i in range(current_data_len):
+                print("django >>>>>>>>> js")
+                if i < update_data_len:
+                    min_update_achievement(achievement_obj[i], cleaned_data[i])
+                else:
+                    achievement_obj[i].delete()
+        return True 
+    else:
+        print("No valid data was found on the page")
+        return None  
 
 
 def update_contact(data, user_cv):
@@ -186,91 +195,3 @@ def update_contact(data, user_cv):
     contact_obj.save()
     return None
 
-
-# function to clean empty fields 
-def clean_data_exps(data):
-    # data.reverse()
-    # print("data inside cleaning function ", data)
-
-    result = []
-    for i in range(len(data)):
-        # print(data[i]["title"]) 
-        # print([data][i]["company"])
-        if(data[i]["title"] == "" and data[i]["company"] == ""):
-            pass
-        else:
-            result.append(data[i])
-    return result
-
-def min_update_exp(exp, data):
-    exp.title = data["title"]
-    exp.company = data["company"]
-    if data["start"] != "":
-        exp.start = data['start']
-    if data["end"] != "":
-        exp.end = data["end"]
-
-    exp.description = data["description"]
-
-    exp.save()
-    # print("updated", exp)
-    return True
-
-def min_create_exp(data, cv):
-    print("data for creating", data)
-    title = data["title"]
-    company = data["company"]
-    if data["start"] != "":
-        start = data['start']
-    if data["end"] != "":
-        end = data["end"]
-    description = data["description"]
-
-    exp = Experience.objects.create(cv=cv, title=title, company=company, start=start, end=end, description=description)
-
-    exp.save()
-    return True
-
-
-def clean_data_education(data):
-
-    result = []
-    for i in range(len(data)):
-        # print(data[i]["title"]) 
-        # print([data][i]["company"])
-        if(data[i]["name"] == "" and data[i]["major"] == ""):
-            pass
-        else:
-            result.append(data[i])
-    return result
-
-
-def min_update_education(education, data):
-    education.name = data["name"]
-    education.major = data["major"]
-    if data["start"] != "":
-        education.start = data['start']
-    if data["end"] != "":
-        education.end = data["end"]
-    education.institution = data["institution"]
-    education.description = data["description"]
-
-    education.save()
-    # print("updated",  education)
-    return True
-
-def min_create_education(data, cv):
-    print("data for creating", data)
-    name = data["name"]
-    major = data["major"]
-    if data["start"] != "":
-        start = data['start']
-    if data["end"] != "":
-        end = data["end"]
-    institution = data["institution"]
-    description = data["description"]
-
-    education = Education.objects.create(cv=cv, name=name, major=major, start=start, end=end, institution=institution, description=description)
-
-    education.save()
-    return True

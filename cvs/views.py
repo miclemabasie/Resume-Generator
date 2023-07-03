@@ -97,9 +97,9 @@ def generate_cv(request):
         education_info = data["Education"]
         experience_info = data["Experience"]
         skills_info = data["Skills"]
-        projects_info = data["Projects"]
+        # projects_info = data["Projects"]
         achievements_info = data["Achievements"]
-        language_info = data["Language"]
+        language_info = data["Languages"]
         contact_info = data["Contact"]
         # Get the CV associated to the current logged in user
         user_cv = CV.objects.filter(name=data["cvName"]).first()
@@ -111,9 +111,9 @@ def generate_cv(request):
             # update_personalInfo(personalinfo, user_cv)
             update_education(education_info, user_cv, user)
             update_experience(experience_info, user_cv, user)
+            update_achieve(achievements_info, user_cv, user)
             # update_skills(skills_info, user_cv)
             # update_project(projects_info, user_cv)
-            # update_achieve(achievements_info, user_cv)
             # update_language(language_info, user_cv)
             return JsonResponse({"message": "succesfully updated"})
             # return HttpResponseRedirect("/download-cv/")
