@@ -127,6 +127,7 @@
         .skill__level--advanced {
             background-color: #66b3ff;
         }
+        
     </style>
 </head>
 
@@ -137,42 +138,98 @@
     </header>
 
     <div class="content">
-        <div class="content__left">
-            <h2 style="padding-top: 30px">Personal Information</h2>
-            <ul>
-                <li><strong>Frist Name: <span id="fname_tem">{{data.pinfo.firstName}}</span></strong> </li>
-                <li><strong>Last Name: <span id="lname_tem">{{data.pinfo.lastName}}</span></strong> </li>
-                <li><strong>Date of Birth: <span id="dob_tem">{{data.pinfo.dob}}</span></strong> </li>
-                <li><strong>place of Birth: <span id="pob_tem">{{data.pinfo.pob}}</span></strong> </li>
-                <li><strong>Location: <span id="location_tem">{{data.pinfo.location}}</span></strong></li>
-                <li><strong>Email: <span id="email_tem">{{data.pinfo.email}}</span></strong></li>
-                <li><strong>Phone: <span id="phone_tem">{{data.pinfo.phone}}</span></strong> </li>
-            </ul>
+        <div class="lefside">
+            <div class="content__left">
+                <h2 style="padding-top: 30px">Personal Information</h2>
+                <ul>
+                    <li><strong>Frist Name: <span id="fname_tem">{{data.pinfo.firstName}}</span></strong> </li>
+                    <li><strong>Last Name: <span id="lname_tem">{{data.pinfo.lastName}}</span></strong> </li>
+                    <li><strong>Date of Birth: <span id="dob_tem">{{data.pinfo.dob}}</span></strong> </li>
+                    <li><strong>place of Birth: <span id="pob_tem">{{data.pinfo.pob}}</span></strong> </li>
+                    <li><strong>Location: <span id="location_tem">{{data.pinfo.location}}</span></strong></li>
+                    <li><strong>Email: <span id="email_tem">{{data.pinfo.email}}</span></strong></li>
+                    <li><strong>Phone: <span id="phone_tem">{{data.pinfo.phone}}</span></strong> </li>
+                </ul>
+            </div>
 
-            <h2>Education</h2>
-            <ul>
-                <li><strong>Bachelor's Degree in Computer Science</strong></li>
-                <li>University of XYZ</li>
-                <li>Graduated in May 2012</li>
-            </ul>
+            <div class="content__right">
+                <h2>Experience</h2>
+                <ul>
+                    {% for exp in data.expinfo %}
+                    <li>
+                    <h5><strong>{{exp.title}}</strong></h5>
+                    <h5>{{exp.company}}</h5>
+                    <h5>{{exp.start}} - {{exp.end}}</h5>
+                    <h5>Responsibilities:</h5>
+                    <p class="exp-desc">{{exp.description}}</p>
+                    <hr>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
 
-            <h2>Achievements</h2>
-            <ul>
-                <li>Completed Project A, which resulted in a 30% increase in website traffic</li>
-                <li>Received Employee of the Month award in January 2015</li>
-            </ul>
+            <div class="content__right">
+                <h2>Achievements</h2>
+                <ul>
+                    {% for ach in data.achInfo %}
+                    <li>
+                    <h5><strong>{{ach.name}}</strong></h5>
+                    <h5>{{ach.date}}</h5>
+                    <h5>{{ach.organization}}</h5>
+                    <h5>{{ach.link}}</h5>
+                    <h5>Responsibilities:</h5>
+                    <p class="exp-desc">{{ach.description}}</p>
+                    <li>
+                    <hr>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
 
-        <div class="content__right">
-            <h2>Experience</h2>
-            <ul>
-                <h5><strong>{{data.expinfo.title}}</strong></h5>
-                <h5>{{data.expinfo.company}}</h5>
-                <h5>{{data.expinfo.start}} - {{data.expinfo.end}}</h5>
-                <h5>Responsibilities:</h5>
-                <p class="exp-desc">{{data.expinfo.description}}</p>
-            </ul>
+        <div class="rightside">
+            <div class="content__right">
+                <h2>Education</h2>
+                <ul>
+                    {% for educ in data.eduInfo %}
+                    <li>
+                        <h5><strong>{{educ.title}}</strong></h5>
+                        <h5>{{educ.major}}</h5>
+                        <h5>{{educ.start}} - {{educ.end}}</h5>
+                        <h5>Responsibilities:</h5>
+                        <p class="exp-desc">{{educ.description}}</p>
+                    </li>
+                    <hr>
+                    {% endfor %}
+                </ul>
+            </div>
+    
+            <div class="content__right">
+                <h2>Skills</h2>
+                <ul>
+                    {% for skill in data.skillInfo %}
+                    <li>
+                    <h5><strong>{{skill.name}}</strong></h5>
+                    <h5>{{skill.level}}</h5>
+                    </li>
+                    <hr>
+                    {% endfor %}
+                </ul>
+            </div>
+    
+            <div class="content__right">
+                <h2>Languages</h2>
+                <ul>
+                    {% for lang in data.langInfo %}
+                    <li>
+                    <h5><strong>{{lang.name}}</strong></h5>
+                    <h5>{{lang.level}}</h5>
+                    </li>
+                    <hr>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
+    </div>
 </body>
 
 </html>

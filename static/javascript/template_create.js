@@ -139,6 +139,82 @@ document.addEventListener("DOMContentLoaded", function (e) {
                         }
                     }
                 }
+
+                // Achievements
+                if (data["achievements"].length > 0) {
+                    console.log("this acchs")
+                    CV["Achievements"] = data["achievements"]
+                    // find the length of ach for current user
+                    let database_education_len = data["achievements"].length;
+                    for (let i = 0; i < database_education_len; i++) {
+                        if (i != 0) {
+                            let parentElement = document.querySelector('.achievements');
+                            duplicateFormAchievement("achievementForm", parentElement)
+                        }
+                        let formsss = document.querySelectorAll('.achievementForm')
+                        compileExtraCVDataAchievement(formsss, CV)
+                        updateachievementForm(data['achievements'][i], formsss[i])
+                        if (i != 0) {
+                            updateTemplateAchievementRest(data["achievements"][i], i)
+                            updateTemplateHtmlAchievement(CV, formsss);
+                        } else {
+                            updateTemplateAchievementInfo(data["achievements"][i])
+                        }
+                    }
+                } else {
+                    console.log("No data about achievements from djagno")
+                }
+
+                // skills
+                if (data["skills"].length > 0) {
+                    console.log("this acchs")
+                    CV["Skills"] = data["skills"]
+                    // find the length of skills for current user
+                    let database_education_len = data["skills"].length;
+                    for (let i = 0; i < database_education_len; i++) {
+                        if (i != 0) {
+                            let parentElement = document.querySelector('.skills');
+                            duplicateFormSkill("skillForm", parentElement)
+                        }
+                        let formsss = document.querySelectorAll('.skillForm')
+                        compileExtraCVDataSkill(formsss, CV)
+                        updateSkillForm(data['skills'][i], formsss[i])
+                        if (i != 0) {
+                            updateTemplateSkillInfoRest(data["skills"][i], i)
+                            updateTemplateHtmlSkill(CV, formsss);
+                        } else {
+                            updateTemplateSkillInfo(data["skills"][i])
+                        }
+                    }
+                } else {
+                    console.log(data["skills"])
+                    console.log("No data about skills from djagno")
+                }
+
+                // Languages
+                if (data["languages"].length > 0) {
+                    CV["Languages"] = data["languages"]
+                    // find the length of languages for current user
+                    let database_education_len = data["languages"].length;
+                    for (let i = 0; i < database_education_len; i++) {
+                        if (i != 0) {
+                            let parentElement = document.querySelector('.languages');
+                            duplicateFormLanguage("languageForm", parentElement)
+                        }
+                        let formsss = document.querySelectorAll('.languageForm')
+                        compileExtraCVDataLanguage(formsss, CV)
+                        updateLanguageForm(data['languages'][i], formsss[i])
+                        if (i != 0) {
+                            updateTemplateLanaguageRest(data["languages"][i], i)
+                            updateTemplateHtmlLanguage(CV, formsss);
+                        } else {
+                            updateTemplateLanaguageInfo(data["languages"][i])
+                        }
+                    }
+                } else {
+                    console.log(data["languages"])
+                    console.log("No data about languages from djagno")
+                }
             })
 
         return false;
@@ -172,7 +248,7 @@ pInfoForm.addEventListener("keyup", function (e) {
     let value = e.target.value
     updateCVData(CV, "PersonalInfo", element, value)
     // Send the values from JSON to the template
-    updateTemplatePersonalInfo(personal_data, false);
+    updateTemplatePersonalInfo(CV["PersonalInfo"], false);
 
 })
 function updateCVData(data, form, element, value) {

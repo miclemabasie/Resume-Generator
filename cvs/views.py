@@ -108,7 +108,7 @@ def generate_cv(request):
             print("There is a CV for this user, we need updates only")
             print(education_info)
             # Run update routine functions
-            # update_personalInfo(personalinfo, user_cv)
+            update_personalInfo(personalinfo, user_cv)
             update_education(education_info, user_cv, user)
             update_experience(experience_info, user_cv, user)
             update_achieve(achievements_info, user_cv, user)
@@ -122,12 +122,11 @@ def generate_cv(request):
             print("New instance of cv creation")
             cv = CV.objects.create(user=user, name=data["cvName"])
             create_personalInfo(personalinfo, cv)
-            # create_education(education_info, cv)
-            # create_experience(experience_info, cv)
-            # create_skills(skills_info, cv)
-            # create_project(projects_info, cv)
-            # create_achieve(achievements_info, cv)
-            # create_language(language_info, cv)
+            update_education(education_info, cv, user)
+            update_experience(experience_info, cv, user)
+            update_achieve(achievements_info, cv, user)
+            update_skills(skills_info, cv, user)
+            update_language(language_info, cv, user)
             return JsonResponse({"message": "successfully created"})
             # return HttpResponseRedirect("/download-cv")
 
@@ -137,8 +136,15 @@ def download_pdf(request):
     template_path = "pdf_templates/template_1.html"
     user = request.user
     personalInfo = PersonalInfomation.objects.get(cv__user=user)
-    experienceInfo = Experience.objects.filter(cv__user=user).first()
-    pdf_data = {"pinfo": personalInfo, "expinfo": experienceInfo}
+    experienceInfo = Experience.objects.filter(cv__user=user)
+    educationInfo = Education.objects.filter(cv__user=user)
+    languageInfo = Language.objects.filter(cv__user=user)
+    skillInfo = Skill.objects.filter(cv__user=user)
+    achievementInfo = Achievement.objects.filter(cv__user=user)
+    profile = Profile.objects.filter(user=user).first()
+    
+
+    pdf_data = {"pinfo": personalInfo, "expinfo": experienceInfo, "eduInfo": educationInfo, "langInfo": languageInfo, "skillInfo": skillInfo, "achInfo": achievementInfo, "profile": profile}
     context = {"data": pdf_data}
     cv_name = f"{user.username}-cv"
     # Create a Django response object, and specify content_type as pdf

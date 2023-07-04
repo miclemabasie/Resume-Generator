@@ -75,7 +75,6 @@ def update_experience(data, cv, user):
     print("Data from javascrip")
     experience_obj = Experience.objects.filter(cv__user=user)
     cleaned_data = clean_data_exps(data)
-
     # get the len of the two datasets (Database and Javascript)
     update_data_len = len(cleaned_data)
     current_data_len = len(experience_obj)
@@ -87,20 +86,13 @@ def update_experience(data, cv, user):
         for i in range(update_data_len):
             min_update_exp(experience_obj[i], cleaned_data[i])
     elif update_data_len > current_data_len:
-        print("########################")
-        print("The len of javascript is greated than that of django")
         for i in range(update_data_len):
             if i < current_data_len:
                 print("this is i", i, "this is curent lent", current_data_len)
                 print("updatin data insteat")
                 min_update_exp(experience_obj[i], cleaned_data[i])
-                print("########################")
             else:
-                print("creating data instead")
                 min_create_exp(cleaned_data[i], cv)
-                print("#####################")
-
-
     elif update_data_len < current_data_len:
         # Some of the experiences have been removed
         # update the ones left

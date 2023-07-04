@@ -67,6 +67,18 @@ class Education(models.Model):
         verbose_name=_("Description"), max_length=300, blank=True, null=True
     )
 
+    # return a valid date to javascript
+    def get_valid_start_format(self):
+        start = self.start.strftime("%Y:%m:%d")
+        start = start.split(':')
+        start = "-".join(start)
+        return f"00{start}"
+
+    def get_valid_end_format(self):
+        end = self.end.strftime("%Y:%m:%d")
+        end = end.split(':')
+        end = "-".join(end)
+        return f"00{end}"
 
 class Experience(models.Model):
     cv = models.ForeignKey(CV, related_name="experiences", on_delete=models.CASCADE)
@@ -88,7 +100,7 @@ class Experience(models.Model):
 
 
 class Skill(models.Model):
-    cv = models.OneToOneField(CV, related_name="skills", on_delete=models.CASCADE)
+    cv = models.ForeignKey(CV, related_name="skills", on_delete=models.CASCADE)
     name = models.CharField(verbose_name=_("Skill Name"), max_length=100)
     level = models.IntegerField(
         validators=[MinValueValidator(0), MaxValueValidator(100)], default=0

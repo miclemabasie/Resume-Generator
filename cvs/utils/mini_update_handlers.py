@@ -116,9 +116,9 @@ def clean_data_achievement(data):
 
 def min_update_achievement(achievement, data):
     achievement.name = data["name"]
-    achievement.date = data["date"]
-    if data["date"] != "":
-        achievement.start = data['date']
+    achievement.link = data["link"]
+    # if data["date"] != "":
+    #     achievement.start = data['date']
     achievement.organization = data["organization"]
     achievement.description = data["description"]
 
