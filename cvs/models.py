@@ -53,6 +53,12 @@ class PersonalInfomation(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    def get_valid_dob_format(self):
+        dob = self.dob.strftime("%Y:%m:%d")
+        dob = dob.split(':')
+        dob = "-".join(dob)
+        return f"00{dob}"
+
 
 class Education(models.Model):
     cv = models.ForeignKey(CV, related_name="education", on_delete=models.CASCADE)
@@ -97,6 +103,19 @@ class Experience(models.Model):
     description = models.CharField(
         verbose_name=_("Description"), max_length=300, blank=True, null=True
     )
+
+    # return a valid date to javascript
+    def get_valid_start_format(self):
+        start = self.start.strftime("%Y:%m:%d")
+        start = start.split(':')
+        start = "-".join(start)
+        return f"00{start}"
+
+    def get_valid_end_format(self):
+        end = self.end.strftime("%Y:%m:%d")
+        end = end.split(':')
+        end = "-".join(end)
+        return f"00{end}"
 
 
 class Skill(models.Model):
@@ -152,3 +171,9 @@ class Achievement(models.Model):
     link = models.CharField(
         verbose_name=_("Link"), max_length=100, blank=True, null=True
     )
+
+    def get_valid_date_format(self):
+        date = self.date.strftime("%Y:%m:%d")
+        date = date.split(':')
+        date = "-".join(date)
+        return f"00{date}"

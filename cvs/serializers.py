@@ -2,6 +2,10 @@ from rest_framework import serializers
 from .models import CV, Skill, PersonalInfomation, Experience, Education, Achievement, Language
 
 class PersonalInfoSerializer(serializers.ModelSerializer):
+    dob = serializers.SerializerMethodField()
+
+    def get_dob(self, instance):
+        return instance.get_valid_dob_format()
     class Meta:
         model = PersonalInfomation
         fields = [
@@ -29,6 +33,13 @@ class LanguageSerializer(serializers.ModelSerializer):
         fields = ["name", "level"]
 
 class ExperienceSerializer(serializers.ModelSerializer):
+    start = serializers.SerializerMethodField()
+    end = serializers.SerializerMethodField()
+    def get_start(self, instance):
+        return instance.get_valid_start_format()
+    
+    def get_end(self, instance):
+        return instance.get_valid_end_format()
     class Meta:
         model = Experience
         fields = ["title", "company", "start", "end", "description"]
@@ -47,6 +58,10 @@ class EducationSerializer(serializers.ModelSerializer):
         fields = ["name", "major", "start", "end", "institution", "description"]
 
 class AchievementSerializer(serializers.ModelSerializer):
+    date = serializers.SerializerMethodField()
+
+    def get_date(self, instance):
+        return instance.get_valid_date_format()
     class Meta:
         model = Achievement
         fields = ["name", "date", "organization", "description", "link"]
