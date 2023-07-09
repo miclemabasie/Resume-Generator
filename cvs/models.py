@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db.models.signals import post_save
+from django.contrib.auth.models import User
 
 User = get_user_model()
 
@@ -25,11 +27,17 @@ class CV(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
-    image = models.ImageField(upload_to="profile")
-    phone = models.CharField(max_length=20)
+    image = models.ImageField(upload_to="profile", null=True, blank=True)
+    phone = models.CharField(max_length=20, null=True, blank=True)
     cv = models.ForeignKey(
         CV, related_name="prifile", on_delete=models.SET_NULL, null=True, blank=True
     )
+
+def create_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance) 
+
+post_save.connect(create_profile, sender=User)
 
 
 class PersonalInfomation(models.Model):
