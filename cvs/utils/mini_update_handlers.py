@@ -41,6 +41,8 @@ def min_update_exp(exp, data):
     return True
 
 def min_create_exp(data, cv):
+    start = None
+    end = None
     print("data for creating", data)
     title = data["title"]
     company = data["company"]
@@ -50,7 +52,12 @@ def min_create_exp(data, cv):
         end = data["end"]
     description = data["description"]
 
-    exp = Experience.objects.create(cv=cv, title=title, company=company, start=start, end=end, description=description)
+    if start and end:
+        exp = Experience.objects.create(cv=cv, title=title, company=company, start=start, end=end, description=description)
+    else: 
+        exp = Experience.objects.create(cv=cv, title=title, company=company, description=description)
+
+    
 
     exp.save()
     return True

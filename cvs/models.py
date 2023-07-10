@@ -106,8 +106,8 @@ class Education(models.Model):
 class Experience(models.Model):
     cv = models.ForeignKey(CV, related_name="experiences", on_delete=models.CASCADE)
     title = models.CharField(verbose_name=_("title"), max_length=200)
-    start = models.DateTimeField(verbose_name=_("Start"))
-    end = models.DateTimeField(verbose_name=_("End"))
+    start = models.DateTimeField(verbose_name=_("Start"), null=True, blank=True)
+    end = models.DateTimeField(verbose_name=_("End"), null=True, blank=True)
     company = models.CharField(
         verbose_name=_("Company"), max_length=50, null=True, blank=True
     )
