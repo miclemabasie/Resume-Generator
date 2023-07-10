@@ -141,3 +141,32 @@ header {
     font-size: 24px;
   }
   
+
+  @media (max-width: 768px) {
+    /* Your CSS rules for mobile devices go here */
+    .split-container {
+      display: flex;
+      flex-direction: column;
+    }
+  .split {
+    height: 100vh;
+    /* Set height to full viewport height */
+    overflow-y: scroll;
+    /* Allow for scrolling */
+  }
+  
+  .left {
+      width: 100%;
+      padding: 100px;
+      /* Set left section to be half the width */
+      background-color: #f1f1f1;
+      /* Add some styling */
+  }
+  
+  .right {
+      width: 100%;
+      /* Set right section to be half the width */
+      background-color: #ddd;
+      /* Add some styling */
+  }
+  }
