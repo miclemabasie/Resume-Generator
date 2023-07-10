@@ -74,8 +74,8 @@ class PersonalInfomation(models.Model):
 class Education(models.Model):
     cv = models.ForeignKey(CV, related_name="education", on_delete=models.CASCADE)
     name = models.CharField(verbose_name=_("Name"), max_length=50)
-    start = models.DateTimeField(verbose_name=_("Start"))
-    end = models.DateTimeField(verbose_name=_("End"))
+    start = models.DateTimeField(verbose_name=_("Start"), null=True, blank=True)
+    end = models.DateTimeField(verbose_name=_("End"), null=True, blank=True)
     major = models.CharField(
         verbose_name=_("Major"), max_length=100, blank=True, null=True
     )

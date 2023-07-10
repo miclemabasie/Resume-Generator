@@ -91,6 +91,8 @@ def min_update_education(education, data):
     return True
 
 def min_create_education(data, cv):
+    start = None
+    end = None
     print("data for creating", data)
     name = data["name"]
     major = data["major"]
@@ -100,9 +102,12 @@ def min_create_education(data, cv):
         end = data["end"]
     institution = data["institution"]
     description = data["description"]
-
-    education = Education.objects.create(cv=cv, name=name, major=major, start=start, end=end, institution=institution, description=description)
-
+    
+    if start and end:
+        education = Education.objects.create(cv=cv, name=name, major=major, start=start, end=end, institution=institution, description=description)
+    else:
+        education = Education.objects.create(cv=cv, name=name, major=major, institution=institution, description=description)
+    
     education.save()
     return True
 
