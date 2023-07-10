@@ -20,7 +20,6 @@ def create_personalInfo(data, cv):
         personal_obj = PersonalInfomation.objects.create(cv=cv, firstName=first_name, lastName=last_name, image=image, summary=summary, pob=pob, location=location, headline=headline, phone=phone, email=email)
         
     personal_obj.save()
-    return True
 
 
 
@@ -38,7 +37,7 @@ def create_experience(data, cv):
 
     exp_obj = Experience.objects.create(cv=cv, title=title, role=role, company=company, start=start, end=end, description=description)
     exp_obj.save
-    return True
+
 
 
 def create_skills(data, cv):

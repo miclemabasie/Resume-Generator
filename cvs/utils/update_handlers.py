@@ -20,7 +20,6 @@ def update_personalInfo(data, user_cv):
         personal_info_obj = PersonalInfomation.objects.get(cv=user_cv)
     except PersonalInfomation.DoesNotExist:
         create_personalInfo(data, user_cv)
-        return None
     # Update individual objects in that instance
     personal_info_obj.firstName = data["firstName"]
     personal_info_obj.lastName = data["lastName"]
@@ -35,7 +34,7 @@ def update_personalInfo(data, user_cv):
     personal_info_obj.email = data["email"]
 
     personal_info_obj.save()
-    return None
+
 
 
 def update_education(data, cv, user):    
@@ -72,8 +71,6 @@ def update_education(data, cv, user):
             else:
                 education_obj[i].delete()
 
-    return True
-
 
 def update_experience(data, cv, user):
     # Get Experience obj for this user_cv
@@ -107,8 +104,6 @@ def update_experience(data, cv, user):
                 min_update_exp(experience_obj[i], cleaned_data[i])
             else:
                 experience_obj[i].delete()
-
-    return True
 
 
 def update_skills(data, cv, user):
@@ -146,10 +141,8 @@ def update_skills(data, cv, user):
                     min_update_skill(skill_obj[i], cleaned_data[i])
                 else:
                     skill_obj[i].delete()
-        return True 
     else:
         print("No valid data was found on the page")
-        return None  
 
 
 
@@ -188,10 +181,9 @@ def update_language(data, cv, user):
                     min_update_language(language_obj[i], cleaned_data[i])
                 else:
                     language_obj[i].delete()
-        return True 
     else:
         print("No valid data was found on the page")
-        return None  
+     
 
 def update_project(data, user_cv):
     # get project obj for this user CV
@@ -202,7 +194,7 @@ def update_project(data, user_cv):
     project_obj.link = data["link"]
 
     project_obj.save()
-    return None
+
 
 
 def update_achieve(data, cv, user):
@@ -240,10 +232,9 @@ def update_achieve(data, cv, user):
                     min_update_achievement(achievement_obj[i], cleaned_data[i])
                 else:
                     achievement_obj[i].delete()
-        return True 
     else:
         print("No valid data was found on the page")
-        return None  
+   
 
 
 def update_contact(data, user_cv):
@@ -256,5 +247,5 @@ def update_contact(data, user_cv):
     contact_obj.links = data["others"]
 
     contact_obj.save()
-    return None
+
 
