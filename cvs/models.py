@@ -66,7 +66,7 @@ class PersonalInfomation(models.Model):
             dob = self.dob.strftime("%Y:%m:%d")
             dob = dob.split(':')
             dob = "-".join(dob)
-            return f"00{dob}"
+            return f"{dob}"
         else: 
             return ""
 
