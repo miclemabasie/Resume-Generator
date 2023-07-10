@@ -102,7 +102,7 @@ def min_create_education(data, cv):
         end = data["end"]
     institution = data["institution"]
     description = data["description"]
-    
+
     if start and end:
         education = Education.objects.create(cv=cv, name=name, major=major, start=start, end=end, institution=institution, description=description)
     else:
@@ -139,14 +139,17 @@ def min_update_achievement(achievement, data):
     return True
 
 def min_create_achievement(data, cv):
+    date = None
     print("data for creating", data)
     name = data["name"]
     date = data["date"]
     organization = data["organization"]
     description = data["description"]
-
-    achievement = Achievement.objects.create(cv=cv, name=name, date=date, organization=organization, description=description)
-
+    if date:
+        achievement = Achievement.objects.create(cv=cv, name=name, date=date, organization=organization, description=description)
+    else:
+        achievement = Achievement.objects.create(cv=cv, name=name, organization=organization, description=description)
+    
     achievement.save()
     return True
 
