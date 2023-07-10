@@ -14,8 +14,11 @@ def create_personalInfo(data, cv):
     phone = data["phone"]
     email = data["email"]
 
-
-    personal_obj = PersonalInfomation.objects.create(cv=cv, firstName=first_name, lastName=last_name, image=image, summary=summary, dob=dob, pob=pob, location=location, headline=headline, phone=phone, email=email)
+    if dob != "":
+        personal_obj = PersonalInfomation.objects.create(cv=cv, firstName=first_name, lastName=last_name, image=image, summary=summary, dob=dob, pob=pob, location=location, headline=headline, phone=phone, email=email)
+    else:
+        personal_obj = PersonalInfomation.objects.create(cv=cv, firstName=first_name, lastName=last_name, image=image, summary=summary, pob=pob, location=location, headline=headline, phone=phone, email=email)
+        
     personal_obj.save()
     return True
 

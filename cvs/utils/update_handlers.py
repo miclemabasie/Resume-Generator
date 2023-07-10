@@ -16,7 +16,11 @@ from . mini_update_handlers import *
 
 def update_personalInfo(data, user_cv):
     # Get the personal info associated with this CV
-    personal_info_obj = PersonalInfomation.objects.get(cv=user_cv)
+    try:
+        personal_info_obj = PersonalInfomation.objects.get(cv=user_cv)
+    except PersonalInfomation.DoesNotExist:
+        create_personalInfo(data, user_cv)
+        return None
     # Update individual objects in that instance
     personal_info_obj.firstName = data["firstName"]
     personal_info_obj.lastName = data["lastName"]
@@ -25,7 +29,8 @@ def update_personalInfo(data, user_cv):
     personal_info_obj.summary = data.get("summary") or ""
     personal_info_obj.location = data["location"]
     personal_info_obj.pob = data["pob"]
-    personal_info_obj.dob = data["dob"]
+    if data["dob"]:
+        personal_info_obj.dob = data["dob"]
     personal_info_obj.phone = data["phone"]
     personal_info_obj.email = data["email"]
 

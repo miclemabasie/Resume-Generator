@@ -50,7 +50,7 @@ class PersonalInfomation(models.Model):
     summary = models.CharField(
         verbose_name=_("Bio"), max_length=300, blank=True, null=True
     )
-    dob = models.DateTimeField(verbose_name=_("Date Of Birth"))
+    dob = models.DateTimeField(verbose_name=_("Date Of Birth"), null=True, blank=True)
     location = models.CharField(verbose_name=_("Location"), max_length=100)
     headline = models.CharField(verbose_name=_("Headline"), max_length=100)
     pob = models.CharField(verbose_name=("Place of Birht"), max_length=200)
@@ -62,10 +62,13 @@ class PersonalInfomation(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def get_valid_dob_format(self):
-        dob = self.dob.strftime("%Y:%m:%d")
-        dob = dob.split(':')
-        dob = "-".join(dob)
-        return f"00{dob}"
+        if self.dob:
+            dob = self.dob.strftime("%Y:%m:%d")
+            dob = dob.split(':')
+            dob = "-".join(dob)
+            return f"00{dob}"
+        else: 
+            return ""
 
 
 class Education(models.Model):
@@ -83,16 +86,22 @@ class Education(models.Model):
 
     # return a valid date to javascript
     def get_valid_start_format(self):
-        start = self.start.strftime("%Y:%m:%d")
-        start = start.split(':')
-        start = "-".join(start)
-        return f"00{start}"
+        if self.start:
+            start = self.start.strftime("%Y:%m:%d")
+            start = start.split(':')
+            start = "-".join(start)
+            return f"00{start}"
+        else:
+            return ""
 
     def get_valid_end_format(self):
-        end = self.end.strftime("%Y:%m:%d")
-        end = end.split(':')
-        end = "-".join(end)
-        return f"00{end}"
+        if self.end:
+            end = self.end.strftime("%Y:%m:%d")
+            end = end.split(':')
+            end = "-".join(end)
+            return f"00{end}"
+        else: 
+            return ""
 
 class Experience(models.Model):
     cv = models.ForeignKey(CV, related_name="experiences", on_delete=models.CASCADE)
@@ -114,17 +123,23 @@ class Experience(models.Model):
 
     # return a valid date to javascript
     def get_valid_start_format(self):
-        start = self.start.strftime("%Y:%m:%d")
-        start = start.split(':')
-        start = "-".join(start)
-        return f"00{start}"
+        if self.start:
+            start = self.start.strftime("%Y:%m:%d")
+            start = start.split(':')
+            start = "-".join(start)
+            return f"00{start}"
+        else: 
+            return ""
 
+            
     def get_valid_end_format(self):
-        end = self.end.strftime("%Y:%m:%d")
-        end = end.split(':')
-        end = "-".join(end)
-        return f"00{end}"
-
+        if self.end:
+            end = self.end.strftime("%Y:%m:%d")
+            end = end.split(':')
+            end = "-".join(end)
+            return f"00{end}"
+        else: 
+            return ""
 
 class Skill(models.Model):
     cv = models.ForeignKey(CV, related_name="skills", on_delete=models.CASCADE)
@@ -181,7 +196,10 @@ class Achievement(models.Model):
     )
 
     def get_valid_date_format(self):
-        date = self.date.strftime("%Y:%m:%d")
-        date = date.split(':')
-        date = "-".join(date)
-        return f"00{date}"
+        if self.date:
+            date = self.date.strftime("%Y:%m:%d")
+            date = date.split(':')
+            date = "-".join(date)
+            return f"00{date}"
+        else:
+            return ""

@@ -39,7 +39,7 @@ CV = {
     }],
     Languages: [{
         // languages: []
-        lang_name: "",
+        name: "",
         level: "",
     }],
     Contact: {
