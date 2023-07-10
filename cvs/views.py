@@ -133,6 +133,7 @@ def generate_cv(request):
 
 @login_required
 def download_pdf(request):
+    print(request.GET)
     template_path = "pdf_templates/template_1.html"
     user = request.user
     personalInfo = PersonalInfomation.objects.get(cv__user=user)
@@ -149,7 +150,10 @@ def download_pdf(request):
     cv_name = f"{user.username}-cv"
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type="application/pdf")
-    response["Content-Disposition"] = f'filename="{cv_name}.pdf"'
+    if request.GET.get("preview"):
+        response["Content-Disposition"] = f'filename="{cv_name}.pdf"'
+    else:
+        response['Content-Disposition'] = f'attachment; filename="{cv_name}.pdf"'
     # find the template and render it.
     template = get_template(template_path)
     html = template.render(context)

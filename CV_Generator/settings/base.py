@@ -16,13 +16,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 # False if not in os.environ because of casting above
-DEBUG = env("DEBUG")
+# DEBUG = env("DEBUG")
+DEBUG = True
 # Raises Django's ImproperlyConfigured
 # exception if SECRET_KEY not in os.environ
 SECRET_KEY = env("SECRET_KEY")
+SECRET_KEY = "dkalfjalkdsjfalksdjflkasjdflkasjdfkl;ajsdfl;kasjdflka;j"
 
 
-ALLOWED_HOSTS = ["localhost"]
+ALLOWED_HOSTS = ["localhost", "abasie.pythonanywhere.com"]
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 

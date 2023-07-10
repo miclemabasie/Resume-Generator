@@ -274,10 +274,10 @@ function updateCVData2(data, form, id, element, value) {
     data[form][id][element] = value
 }
 
-// Create an event to take handle the cv generation
-generateBtn.addEventListener("click", function () {
-    sendCVData(CV)
-})
+// // Create an event to take handle the cv generation
+// generateBtn.addEventListener("click", function () {
+//     sendCVData(CV)
+// })
 
 
 function sendCVData(object) {
@@ -359,3 +359,92 @@ function updatePersonalInfoForm(personal_data, form) {
 //     });
 
 // }
+
+
+// Add a click event listener to the button
+generateBtn.addEventListener('click', function () {
+    sendCVData(CV)
+    // Create the overlay element
+    const overlay = document.createElement('div');
+    overlay.classList.add('overlay');
+    document.body.appendChild(overlay);
+
+    // Create the modal element and set its classes
+    const modal = document.createElement('div');
+    modal.classList.add('modal', 'fade', 'd-flex', 'align-items-center', 'justify-content-center');
+    modal.style.zIndex = '10000';
+    // Create the modal dialog element
+    const modalDialog = document.createElement('div');
+    modalDialog.classList.add('modal-dialog');
+    modal.appendChild(modalDialog);
+
+    // Create the modal content element
+    const modalContent = document.createElement('div');
+    modalContent.classList.add('modal-content');
+    modalDialog.appendChild(modalContent);
+
+    // Create the modal header element
+    const modalHeader = document.createElement('div');
+    modalHeader.classList.add('modal-header');
+    modalContent.appendChild(modalHeader);
+
+    // Create the close button for the modal
+    const closeButton = document.createElement('button');
+    closeButton.classList.add('close');
+    closeButton.setAttribute('type', 'button');
+    closeButton.innerHTML = '&times;';
+    modalHeader.appendChild(closeButton);
+
+    // Create the modal body element
+    const modalBody = document.createElement('div');
+    modalBody.classList.add('modal-body', 'text-center');
+    modalContent.appendChild(modalBody);
+
+    // Create the text for the modal body
+    const modalText = document.createTextNode('Your CV has been successfuly created!');
+    modalBody.appendChild(modalText);
+
+    // Create the first button in the modal
+    const button1 = document.createElement('a');
+    button1.classList.add('btn', 'btn-primary');
+    button1.setAttribute('href', '/download-cv');
+    button1.innerText = 'Download';
+    // modalBody.appendChild(button1);
+
+    // Create the second button in the modal
+    const button2 = document.createElement('a');
+    button2.classList.add('btn', 'btn-success');
+    button2.setAttribute('href', '/download-cv/?preview=yes');
+    button2.innerText = 'Preview';
+    // button1.style.marginTop = "50px"
+    // button2.style.marginTop = "50px"
+    // modalBody.appendChild(button2);
+
+    // create div to hold to the buttons
+    const btnContainer = document.createElement("div")
+    btnContainer.style.marginTop = "50px"
+    btnContainer.appendChild(button1);
+    btnContainer.appendChild(button2);
+    btnContainer.style.display = "flex"
+    btnContainer.style.justifyContent = 'space-between'
+
+    modalBody.appendChild(btnContainer)
+
+
+    // Append the modal to the document body
+    document.body.appendChild(modal);
+
+    // Show the overlay and modal
+    setTimeout(function () {
+        overlay.classList.add('show');
+        modal.classList.add('show');
+    }, 50);
+
+    // Hide the overlay and modal when clicking on the close button
+    closeButton.addEventListener('click', function () {
+        overlay.classList.remove('show');
+        modal.classList.remove('show');
+        overlay.parentNode.removeChild(overlay)
+        modal.parentNode.removeChild(modal)
+    });
+});
